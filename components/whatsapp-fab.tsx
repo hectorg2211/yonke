@@ -4,7 +4,7 @@ export function WhatsappFab() {
   return (
     <Link
       href="/importaciones"
-      className="fixed right-5 bottom-5 z-50 flex items-center gap-3 border border-amber bg-rust px-4 py-3 text-paper shadow-[6px_6px_0_#0c0b09] transition-transform hover:-translate-y-0.5"
+      className="fixed right-5 bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] z-50 flex items-center gap-3 border border-amber bg-rust px-4 py-3 text-paper shadow-[6px_6px_0_#0c0b09] transition-transform hover:-translate-y-0.5"
       aria-label="Abrir cotización o chat"
     >
       <span className="grid size-8 place-items-center bg-amber text-oil stamp text-[10px]">
