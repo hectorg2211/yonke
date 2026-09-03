@@ -32,6 +32,7 @@
 html {
   scroll-behavior: smooth;
   background: var(--oil);
+  overscroll-behavior-y: none;
 }
 
 body {

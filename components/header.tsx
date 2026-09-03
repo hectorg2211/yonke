@@ -15,7 +15,11 @@ export function Header() {
       : pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-oil pt-[env(safe-area-inset-top)]">
+    <header className="sticky top-0 z-100 border-b border-line bg-oil">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-full h-24 bg-oil"
+      />
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 md:px-8">
         <Link href="/" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
           <span className="grid size-11 place-items-center border border-amber bg-asphalt text-[11px] font-medium text-amber stamp">

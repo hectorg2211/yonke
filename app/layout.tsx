@@ -48,10 +48,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
     >
       <body className="grain flex min-h-full flex-col bg-oil text-cream">
-        <div
-          aria-hidden
-          className="pointer-events-none fixed inset-x-0 top-0 z-50 h-[env(safe-area-inset-top)] bg-oil"
-        />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
