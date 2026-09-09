@@ -3,21 +3,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
-import {
-  catalog,
-  getProductBySlug,
-  relatedProducts,
-} from "@/lib/site";
+import { AddToCart } from "@/components/cart/add-to-cart";
+import { getCatalog, getCatalogProduct, relatedCatalog } from "@/lib/catalog";
 
 export async function generateStaticParams() {
-  return catalog.map((item) => ({ sku: item.sku.toLowerCase() }));
+  const items = await getCatalog();
+  return items.map((item) => ({ sku: item.handle }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/inventario/[sku]">): Promise<Metadata> {
   const { sku } = await params;
-  const item = getProductBySlug(sku);
+  const item = await getCatalogProduct(sku);
 
   if (!item) {
     return { title: "Pieza no encontrada" };
@@ -33,13 +31,13 @@ export default async function ProductPage({
   params,
 }: PageProps<"/inventario/[sku]">) {
   const { sku } = await params;
-  const item = getProductBySlug(sku);
+  const item = await getCatalogProduct(sku);
 
   if (!item) {
     notFound();
   }
 
-  const related = relatedProducts(item);
+  const related = await relatedCatalog(item);
   const facts = [
     ["SKU", item.sku],
     ["Familia", item.category],
@@ -95,46 +93,54 @@ export default async function ProductPage({
             ))}
           </dl>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/importaciones"
-              className="stamp border border-amber bg-amber px-6 py-3 text-[12px] text-oil hover:bg-cream"
-            >
-              Pedir esta pieza
-            </Link>
-            <Link
-              href="/inventario"
-              className="stamp border border-line px-6 py-3 text-[12px] text-cream hover:border-amber hover:text-amber"
-            >
-              Volver al catálogo
-            </Link>
+          <div className="mt-8 flex flex-col gap-4">
+            <AddToCart
+              variantId={item.variantId}
+              availableForSale={item.availableForSale}
+            />
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/importaciones"
+                className="stamp border border-line px-6 py-3 text-[12px] text-cream hover:border-amber hover:text-amber"
+              >
+                Cotizar
+              </Link>
+              <Link
+                href="/inventario"
+                className="stamp border border-line px-6 py-3 text-[12px] text-cream hover:border-amber hover:text-amber"
+              >
+                Volver al catálogo
+              </Link>
+            </div>
           </div>
           <p className="mt-4 text-sm text-steel">
-            Vista previa visual. No hay compra en línea todavía: la pieza se
-            confirma en el patio.
+            El pago se cierra en Shopify Checkout. El envío se confirma con el
+            patio.
           </p>
         </div>
       </article>
 
-      <section className="mt-20 border-t border-line pt-12">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="stamp text-[11px] text-amber">Más del patio</p>
-            <h2 className="display mt-2 text-5xl">Otras piezas</h2>
+      {related.length > 0 ? (
+        <section className="mt-20 border-t border-line pt-12">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="stamp text-[11px] text-amber">Más del patio</p>
+              <h2 className="display mt-2 text-5xl">Otras piezas</h2>
+            </div>
+            <Link
+              href="/inventario"
+              className="stamp text-[11px] text-cream underline decoration-rust underline-offset-4 hover:text-amber"
+            >
+              Ver inventario
+            </Link>
           </div>
-          <Link
-            href="/inventario"
-            className="stamp text-[11px] text-cream underline decoration-rust underline-offset-4 hover:text-amber"
-          >
-            Ver inventario
-          </Link>
-        </div>
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {related.map((entry) => (
-            <ProductCard key={entry.sku} item={entry} />
-          ))}
-        </div>
-      </section>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((entry) => (
+              <ProductCard key={entry.handle} item={entry} />
+            ))}
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

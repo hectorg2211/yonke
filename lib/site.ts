@@ -55,10 +55,12 @@ export const partFamilies = [
 ];
 
 export type CatalogItem = {
+  handle: string;
   sku: string;
   name: string;
-  category: "Cabina" | "Motor" | "Eléctrico" | "Carrocería" | "Tren";
+  category: string;
   price: string;
+  priceAmount: number | null;
   note: string;
   image: string;
   imageAlt: string;
@@ -67,14 +69,20 @@ export type CatalogItem = {
   stock: string;
   fit: string;
   details: string;
+  variantId: string | null;
+  availableForSale: boolean;
 };
 
-export const catalog: CatalogItem[] = [
+const mockCatalog: Omit<
+  CatalogItem,
+  "handle" | "variantId" | "availableForSale"
+>[] = [
   {
     sku: "YC-CAB-05",
     name: "Cabina completa",
     category: "Cabina",
     price: "Desde 1,500 USD",
+    priceAmount: 1500,
     note: "Pieza de tractocamión. Precio según año",
     image:
       "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1400&q=80",
@@ -91,6 +99,7 @@ export const catalog: CatalogItem[] = [
     name: "Motor diésel",
     category: "Motor",
     price: "A cotizar",
+    priceAmount: null,
     note: "De patio o por importación, según existencia",
     image:
       "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1400&q=80",
@@ -107,6 +116,7 @@ export const catalog: CatalogItem[] = [
     name: "Espejo lateral",
     category: "Carrocería",
     price: "Consultar",
+    priceAmount: null,
     note: "Pieza de movimiento diario",
     image:
       "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1400&q=80",
@@ -123,6 +133,7 @@ export const catalog: CatalogItem[] = [
     name: "Juego de focos",
     category: "Eléctrico",
     price: "Consultar",
+    priceAmount: null,
     note: "Uno de los tipos de alta rotación",
     image:
       "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=1400&q=80",
@@ -139,6 +150,7 @@ export const catalog: CatalogItem[] = [
     name: "Transmisión",
     category: "Tren",
     price: "A cotizar",
+    priceAmount: null,
     note: "Caja para tractocamión, según año y modelo",
     image:
       "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=80",
@@ -155,6 +167,7 @@ export const catalog: CatalogItem[] = [
     name: "Diferencial",
     category: "Tren",
     price: "A cotizar",
+    priceAmount: null,
     note: "Pieza de tren motriz, no unidad completa",
     image:
       "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1400&q=80",
@@ -167,6 +180,13 @@ export const catalog: CatalogItem[] = [
       "Diferencial de tractocamión. No se vende la unidad completa: solo esta pieza del tren. El año define si hay compatibilidad.",
   },
 ];
+
+export const catalog: CatalogItem[] = mockCatalog.map((item) => ({
+  ...item,
+  handle: item.sku.toLowerCase(),
+  variantId: null,
+  availableForSale: true,
+}));
 
 export const categories = [
   "Todos",
@@ -181,22 +201,13 @@ export function productSlug(sku: string) {
   return sku.toLowerCase();
 }
 
-export function productPath(sku: string) {
-  return `/inventario/${productSlug(sku)}`;
+export function productPath(handle: string) {
+  return `/inventario/${handle}`;
 }
 
 export function getProductBySlug(slug: string) {
   const key = slug.toLowerCase();
-  return catalog.find((item) => productSlug(item.sku) === key);
-}
-
-export function relatedProducts(item: CatalogItem, limit = 3) {
-  const same = catalog.filter(
-    (entry) => entry.category === item.category && entry.sku !== item.sku,
-  );
-  const rest = catalog.filter((entry) => entry.sku !== item.sku);
-  return [...same, ...rest.filter((entry) => !same.includes(entry))].slice(
-    0,
-    limit,
+  return catalog.find(
+    (item) => item.handle === key || productSlug(item.sku) === key,
   );
 }

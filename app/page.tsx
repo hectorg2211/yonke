@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { LocationBlock } from "@/components/location-block";
 import { ProductCard } from "@/components/product-card";
-import { catalog, partFamilies, site } from "@/lib/site";
+import { getCatalog } from "@/lib/catalog";
+import { partFamilies, site } from "@/lib/site";
 
-export default function Home() {
+export default async function Home() {
+  const featured = (await getCatalog()).slice(0, 3);
   return (
     <>
       <section className="relative isolate min-h-[88dvh] overflow-hidden">
@@ -85,8 +87,8 @@ export default function Home() {
           </Link>
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {catalog.slice(0, 3).map((item) => (
-            <ProductCard key={item.sku} item={item} />
+          {featured.map((item) => (
+            <ProductCard key={item.handle} item={item} />
           ))}
         </div>
       </section>

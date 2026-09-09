@@ -66,6 +66,10 @@ export async function storefrontFetch<T>(
     );
   }
 
+  if (payload.errors?.length) {
+    throw new Error(payload.errors.map((error) => error.message).join("; "));
+  }
+
   if (!response.ok) {
     const graphqlMessage = payload.errors?.map((error) => error.message).join("; ");
     const message =

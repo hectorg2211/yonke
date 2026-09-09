@@ -1,18 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import dynamic from "next/dynamic";
 import { Big_Shoulders_Stencil, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { CartDrawer } from "@/components/cart/cart-drawer";
+import { CartProvider } from "@/components/cart/cart-provider";
 import { WhatsappFab } from "@/components/whatsapp-fab";
+import { getCart } from "@/app/actions/cart";
+import { isCustomerSignedIn } from "@/lib/shopify/customer-session";
+import { isCustomerAccountConfigured } from "@/lib/shopify/env";
 import { site } from "@/lib/site";
 import "./globals.css";
-
-const ShopifyDevBubble =
-  process.env.NODE_ENV === "development"
-    ? dynamic(() =>
-        import("@/components/shopify-dev-bubble").then((mod) => mod.ShopifyDevBubble),
-      )
-    : () => null;
 
 const display = Big_Shoulders_Stencil({
   variable: "--font-display",
@@ -49,18 +46,26 @@ export const metadata: Metadata = {
     "Yonke El Cuñado en Garita de Otay, Tijuana: venta de partes para tractocamión. Catálogo y envíos a toda la República.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const accountEnabled = isCustomerAccountConfigured();
+  const [cart, signedIn] = await Promise.all([
+    getCart(),
+    accountEnabled ? isCustomerSignedIn() : Promise.resolve(false),
+  ]);
+
   return (
     <html
       lang="es"
       className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
     >
       <body className="grain flex min-h-full flex-col bg-oil text-cream">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <WhatsappFab />
-        {process.env.NODE_ENV === "development" ? <ShopifyDevBubble /> : null}
+        <CartProvider initialCart={cart}>
+          <Header account={{ enabled: accountEnabled, signedIn }} />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <WhatsappFab />
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

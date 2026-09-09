@@ -1,7 +1,10 @@
 import Link from "next/link";
+import { isCustomerAccountConfigured } from "@/lib/shopify/env";
 import { location, nav, site } from "@/lib/site";
 
 export function Footer() {
+  const accountEnabled = isCustomerAccountConfigured();
+
   return (
     <footer className="border-t border-line bg-asphalt">
       <div className="hazard h-2" aria-hidden="true" />
@@ -24,6 +27,13 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            {accountEnabled ? (
+              <li>
+                <Link href="/cuenta" className="text-cream hover:text-amber">
+                  Cuenta
+                </Link>
+              </li>
+            ) : null}
           </ul>
         </div>
         <div className="md:col-span-4">

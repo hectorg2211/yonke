@@ -3,9 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { CartButton } from "@/components/cart/cart-button";
 import { nav, site } from "@/lib/site";
 
-export function Header() {
+export type HeaderAccount = {
+  enabled: boolean;
+  signedIn: boolean;
+};
+
+export function Header({ account }: { account: HeaderAccount }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -54,17 +60,48 @@ export function Header() {
           >
             Cotizar
           </Link>
+          {account.enabled ? (
+            account.signedIn ? (
+              <Link
+                href="/cuenta"
+                className={`stamp text-[11px] transition-colors ${
+                  isActive("/cuenta") ? "text-amber" : "text-steel hover:text-cream"
+                }`}
+              >
+                Cuenta
+              </Link>
+            ) : (
+              <a
+                href="/api/auth/shopify/login?returnTo=/cuenta"
+                className="stamp text-[11px] text-steel hover:text-cream"
+              >
+                Entrar
+              </a>
+            )
+          ) : null}
+          <CartButton />
         </nav>
 
-        <button
-          type="button"
-          className="stamp grid size-11 place-items-center border border-line text-[10px] text-cream md:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          onClick={() => setOpen((value) => !value)}
-        >
-          {open ? "Cerrar" : "Menú"}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          {account.enabled && account.signedIn ? (
+            <Link
+              href="/cuenta"
+              className="stamp border border-line px-3 py-2 text-[10px] text-cream hover:border-amber hover:text-amber"
+            >
+              Cuenta
+            </Link>
+          ) : null}
+          <CartButton />
+          <button
+            type="button"
+            className="stamp grid size-11 place-items-center border border-line text-[10px] text-cream"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? "Cerrar" : "Menú"}
+          </button>
+        </div>
       </div>
 
       {open ? (
@@ -84,6 +121,26 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          {account.enabled ? (
+            account.signedIn ? (
+              <Link
+                href="/cuenta"
+                onClick={() => setOpen(false)}
+                className={`display py-3 text-4xl ${
+                  isActive("/cuenta") ? "text-amber" : "text-cream"
+                }`}
+              >
+                Cuenta
+              </Link>
+            ) : (
+              <a
+                href="/api/auth/shopify/login?returnTo=/cuenta"
+                className="display py-3 text-4xl text-cream"
+              >
+                Entrar
+              </a>
+            )
+          ) : null}
         </nav>
       ) : null}
     </header>
