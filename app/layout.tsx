@@ -1,10 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import dynamic from "next/dynamic";
 import { Big_Shoulders_Stencil, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { WhatsappFab } from "@/components/whatsapp-fab";
 import { site } from "@/lib/site";
 import "./globals.css";
+
+const ShopifyDevBubble =
+  process.env.NODE_ENV === "development"
+    ? dynamic(() =>
+        import("@/components/shopify-dev-bubble").then((mod) => mod.ShopifyDevBubble),
+      )
+    : () => null;
 
 const display = Big_Shoulders_Stencil({
   variable: "--font-display",
@@ -52,6 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="flex-1">{children}</main>
         <Footer />
         <WhatsappFab />
+        {process.env.NODE_ENV === "development" ? <ShopifyDevBubble /> : null}
       </body>
     </html>
   );
