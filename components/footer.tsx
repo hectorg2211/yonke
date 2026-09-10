@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { isCustomerAccountConfigured } from "@/lib/shopify/env";
-import { location, nav, site } from "@/lib/site";
+import { location, nav, site, whatsappUrl } from "@/lib/site";
 
 export function Footer() {
   const accountEnabled = isCustomerAccountConfigured();
@@ -52,6 +52,14 @@ export function Footer() {
             {location.city}, {location.state} {location.postal}
           </p>
           <p className="mt-3 text-cream">{site.email}</p>
+          <a
+            href={whatsappUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 block text-cream hover:text-amber"
+          >
+            WhatsApp {site.whatsapp}
+          </a>
           <a
             href={location.mapsUrl}
             target="_blank"

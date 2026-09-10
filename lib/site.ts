@@ -5,7 +5,50 @@ export const site = {
   city: "Tijuana",
   phoneLabel: "WhatsApp del patio",
   email: "yonke.elcunado@gmail.com",
+  whatsapp: "664 415 9482",
+  whatsappE164: "526644159482",
 };
+
+export function whatsappUrl(message?: string) {
+  const url = new URL(`https://wa.me/${site.whatsappE164}`);
+  if (message) url.searchParams.set("text", message);
+  return url.toString();
+}
+
+export function mapsPinUrl(lat: number, lng: number) {
+  return `https://www.google.com/maps?q=${lat},${lng}&z=17&hl=es`;
+}
+
+export function mapsEmbedUrl(lat: number, lng: number) {
+  return `https://www.google.com/maps?q=${lat},${lng}&z=17&hl=es&output=embed`;
+}
+
+export function mapsDirectionsUrl(lat: number, lng: number) {
+  return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+}
+
+export const sites = [
+  {
+    id: "principal",
+    label: "Yonke principal",
+    lat: 32.5454241,
+    lng: -116.9483476,
+  },
+  {
+    id: "secundario",
+    label: "Yonke secundario",
+    lat: 32.545101165771484,
+    lng: -116.9496841430664,
+  },
+  {
+    id: "taller",
+    label: "Taller mecánico",
+    lat: 32.5450363,
+    lng: -116.9492893,
+  },
+] as const;
+
+export type YardSite = (typeof sites)[number];
 
 export const location = {
   street: "Aeropuerto 1008",
@@ -14,14 +57,10 @@ export const location = {
   city: "Tijuana",
   state: "B.C.",
   postal: "22430",
-  lat: 32.5454357,
-  lng: -116.9483628,
-  mapsUrl:
-    "https://www.google.com/maps/place/Yonke+El+Cu%C3%B1ado+Tractocamiones/@32.5454357,-116.9483628,17z",
-  embedUrl:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3354!2d-116.9483628!3d32.5454357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d94743bb2abcd1%3A0xb9390de088c54aa9!2sYonke%20El%20Cu%C3%B1ado%20Tractocamiones!5e0!3m2!1ses-419!2smx!4v1",
-  directionsUrl:
-    "https://www.google.com/maps/dir/?api=1&destination=32.5454357,-116.9483628",
+  lat: sites[0].lat,
+  lng: sites[0].lng,
+  mapsUrl: mapsPinUrl(sites[0].lat, sites[0].lng),
+  directionsUrl: mapsDirectionsUrl(sites[0].lat, sites[0].lng),
 };
 
 export const nav = [
