@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { isCustomerAccountConfigured } from "@/lib/shopify/env";
 import { location, nav, site } from "@/lib/site";
@@ -10,8 +11,13 @@ export function Footer() {
       <div className="hazard h-2" aria-hidden="true" />
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-12 md:px-8">
         <div className="md:col-span-5">
-          <p className="stamp text-[11px] text-amber">Yonke · Tractopartes</p>
-          <p className="display mt-3 text-6xl text-cream">{site.shortName}</p>
+          <Image
+            src="/assets/logo.png"
+            alt={site.name}
+            width={1363}
+            height={294}
+            className="h-16 w-auto max-w-80 object-contain object-left md:h-20 md:max-w-xl"
+          />
           <p className="mt-5 max-w-sm text-steel">
             Venta de partes para tractocamión. Inventario de patio y envíos a
             toda la República. Sin taller.

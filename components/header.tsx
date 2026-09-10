@@ -1,10 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { CartButton } from "@/components/cart/cart-button";
-import { nav, site } from "@/lib/site";
+import { nav } from "@/lib/site";
 
 export type HeaderAccount = {
   enabled: boolean;
@@ -26,34 +27,43 @@ export function Header({ account }: { account: HeaderAccount }) {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-full h-24 bg-oil"
       />
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 md:px-8">
-        <Link href="/" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
-          <span className="grid size-11 place-items-center border border-amber bg-asphalt text-[11px] font-medium text-amber stamp">
-            YC
-          </span>
-          <span className="leading-none">
-            <span className="stamp block text-[10px] text-steel">Patio · Tijuana</span>
-            <span className="display mt-1 block text-[26px] whitespace-nowrap text-cream group-hover:text-amber">
-              {site.shortName}
-            </span>
-          </span>
-        </Link>
-
-        <nav className="hidden items-center gap-8 md:flex">
-          {nav.map((item) => {
-            const active = isActive(item.href);
-            return (
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 md:px-8">
+        <div className="flex min-w-0 items-center gap-6 lg:gap-8">
+          <Link
+            href="/"
+            aria-label="Yonke El Cuñado Tractopartes y Servicios"
+            className="shrink-0"
+            onClick={() => setOpen(false)}
+          >
+            <Image
+              src="/assets/logo.png"
+              alt="Yonke El Cuñado Tractopartes y Servicios"
+              width={1363}
+              height={294}
+              priority
+              className="h-9 w-auto max-w-44 object-contain object-left md:h-11 md:max-w-60"
+            />
+          </Link>
+          <nav className="hidden items-center gap-6 md:flex lg:gap-8">
+            {nav
+              .filter((item) => item.href !== "/importaciones")
+              .map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={`stamp text-[11px] transition-colors ${
-                  active ? "text-amber" : "text-steel hover:text-cream"
+                  isActive(item.href)
+                    ? "text-amber"
+                    : "text-steel hover:text-cream"
                 }`}
               >
                 {item.label}
               </Link>
-            );
-          })}
+            ))}
+          </nav>
+        </div>
+
+        <div className="hidden items-center gap-4 md:flex lg:gap-6">
           <Link
             href="/importaciones"
             className="stamp border border-amber bg-amber px-4 py-2 text-[11px] text-oil transition-colors hover:bg-cream"
@@ -65,7 +75,9 @@ export function Header({ account }: { account: HeaderAccount }) {
               <Link
                 href="/cuenta"
                 className={`stamp text-[11px] transition-colors ${
-                  isActive("/cuenta") ? "text-amber" : "text-steel hover:text-cream"
+                  isActive("/cuenta")
+                    ? "text-amber"
+                    : "text-steel hover:text-cream"
                 }`}
               >
                 Cuenta
@@ -80,7 +92,7 @@ export function Header({ account }: { account: HeaderAccount }) {
             )
           ) : null}
           <CartButton />
-        </nav>
+        </div>
 
         <div className="flex items-center gap-2 md:hidden">
           {account.enabled && account.signedIn ? (

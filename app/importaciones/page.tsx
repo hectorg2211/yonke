@@ -85,7 +85,7 @@ export default function ImportacionesPage() {
           </div>
           <button
             type="button"
-            className="stamp h-12 border border-amber bg-amber text-[12px] text-oil"
+            className="stamp h-12 border border-amber bg-amber text-[12px] text-oil hover:bg-cream"
           >
             Pedir cotización real
           </button>

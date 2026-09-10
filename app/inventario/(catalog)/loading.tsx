@@ -1,4 +1,4 @@
-import { InventoryGridSkeleton } from "@/components/inventory-skeleton";
+import { InventoryGridSkeleton } from "@/components/skeleton";
 
 export default function InventarioLoading() {
   return (

@@ -98,20 +98,6 @@ export default async function ProductPage({
               variantId={item.variantId}
               availableForSale={item.availableForSale}
             />
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="/importaciones"
-                className="stamp border border-line px-6 py-3 text-[12px] text-cream hover:border-amber hover:text-amber"
-              >
-                Cotizar
-              </Link>
-              <Link
-                href="/inventario"
-                className="stamp border border-line px-6 py-3 text-[12px] text-cream hover:border-amber hover:text-amber"
-              >
-                Volver al catálogo
-              </Link>
-            </div>
           </div>
           <p className="mt-4 text-sm text-steel">
             El pago se cierra en Shopify Checkout. El envío se confirma con el

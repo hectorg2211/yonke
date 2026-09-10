@@ -13,7 +13,7 @@ export function ProductCard({
   return (
     <Link
       href={productPath(item.handle)}
-      className="group flex flex-col border border-line bg-panel"
+      className="group flex flex-col border border-line bg-panel hover:border-amber"
     >
       <div
         className={`relative overflow-hidden ${compact ? "aspect-4/3" : "aspect-5/4"}`}

@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --oil: #0c0b09;
-  --asphalt: #16140f;
-  --panel: #1f1b14;
-  --rust: #c4531a;
-  --oxide: #8a3412;
-  --amber: #f0b429;
-  --cream: #eadcc6;
-  --steel: #9c9488;
-  --paper: #f4ece0;
-  --line: color-mix(in srgb, var(--cream) 14%, transparent);
+  --oil: #06101c;
+  --asphalt: #0b1c33;
+  --panel: #122848;
+  --rust: #4ea0f5;
+  --oxide: #0a3a8c;
+  --amber: #1e78e4;
+  --cream: #eef3f9;
+  --steel: #8fa8c4;
+  --paper: #f4f1ea;
+  --line: color-mix(in srgb, var(--cream) 16%, transparent);
 }
 
 @theme inline {
@@ -42,6 +42,34 @@ body {
   font-family: var(--font-body), sans-serif;
 }
 
+button:not(:disabled),
+[type="button"]:not(:disabled),
+[type="submit"]:not(:disabled),
+[type="reset"]:not(:disabled),
+a[href],
+summary,
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+button:disabled,
+[type="button"]:disabled,
+[type="submit"]:disabled,
+[type="reset"]:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+a,
+button,
+[role="button"],
+.stamp {
+  transition-property: color, background-color, border-color, opacity, transform,
+    box-shadow, filter, text-decoration-color, outline-color;
+  transition-duration: 180ms;
+  transition-timing-function: ease-out;
+}
+
 ::selection {
   background: var(--amber);
   color: var(--oil);
@@ -66,8 +94,8 @@ body {
     -45deg,
     var(--amber),
     var(--amber) 8px,
-    #111 8px,
-    #111 16px
+    var(--oil) 8px,
+    var(--oil) 16px
   );
 }
 
@@ -84,6 +112,27 @@ body {
   text-transform: uppercase;
 }
 
+.skeleton {
+  background-color: var(--asphalt);
+  background-image: linear-gradient(
+    90deg,
+    var(--asphalt) 0%,
+    var(--panel) 45%,
+    var(--asphalt) 90%
+  );
+  background-size: 220% 100%;
+  animation: skeleton-shift 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-shift {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -120% 0;
+  }
+}
+
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button {
@@ -97,5 +146,17 @@ input[type="search"]::-webkit-search-results-button {
 
   .grain::before {
     display: none;
+  }
+
+  .skeleton {
+    animation: none;
+    background-image: none;
+  }
+
+  a,
+  button,
+  [role="button"],
+  .stamp {
+    transition: none;
   }
 }

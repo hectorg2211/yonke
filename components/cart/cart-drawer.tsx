@@ -55,7 +55,7 @@ export function CartDrawer() {
         aria-modal="true"
         aria-labelledby="cart-title"
         aria-hidden={!open}
-        className={`fixed inset-y-0 right-0 z-120 flex w-full max-w-md flex-col border-l border-line bg-oil shadow-[-12px_0_0_#0c0b09] transition-transform duration-300 ${
+        className={`fixed inset-y-0 right-0 z-120 flex w-full max-w-md flex-col border-l border-line bg-oil shadow-[-12px_0_0_#06101c] transition-transform duration-300 ${
           open ? "translate-x-0" : "pointer-events-none translate-x-full"
         }`}
       >
