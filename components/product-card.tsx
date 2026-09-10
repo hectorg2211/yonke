@@ -13,7 +13,7 @@ export function ProductCard({
   return (
     <Link
       href={productPath(item.handle)}
-      className="group flex flex-col border border-line bg-panel hover:border-amber"
+      className="group flex min-w-0 flex-col border border-line bg-panel hover:border-amber"
     >
       <div
         className={`relative overflow-hidden ${compact ? "aspect-4/3" : "aspect-5/4"}`}
@@ -30,7 +30,7 @@ export function ProductCard({
           {item.sku}
         </span>
         {item.variantId && !item.availableForSale ? (
-          <span className="stamp absolute top-3 right-3 border border-line bg-oil/80 px-2 py-1 text-[10px] text-steel">
+          <span className="stamp absolute inset-x-0 bottom-0 bg-amber px-3 py-2 text-center text-[11px] text-oil">
             Agotada
           </span>
         ) : null}
@@ -48,7 +48,9 @@ export function ProductCard({
         <div
           className={`mt-auto flex items-end justify-between gap-3 ${compact ? "pt-2" : "pt-4"}`}
         >
-          <p className="text-amber">{item.price}</p>
+          <p className={item.variantId && !item.availableForSale ? "text-steel" : "text-amber"}>
+            {item.variantId && !item.availableForSale ? "Agotada" : item.price}
+          </p>
           <span className="stamp text-[10px] text-cream underline decoration-rust underline-offset-4 group-hover:text-amber">
             Ver pieza
           </span>

@@ -18,16 +18,26 @@ export function AddToCart({
   if (!variantId) {
     return (
       <p className="text-sm text-steel">
-        Esta pieza todavía no está en Shopify. Cotízala con el patio.
+        Cotízala con el patio.
       </p>
     );
   }
 
   if (!availableForSale) {
     return (
-      <p className="stamp border border-line px-6 py-3 text-[12px] text-steel">
-        Agotada
-      </p>
+      <div className="border border-amber bg-asphalt px-5 py-5">
+        <p className="stamp text-[11px] text-amber">Sin existencia</p>
+        <p className="display mt-2 text-4xl text-cream md:text-5xl">Agotada</p>
+        <p className="mt-3 text-sm leading-6 text-steel">
+          Esta pieza ya no está en el patio. Cotiza una igual.
+        </p>
+        <a
+          href="/importaciones"
+          className="stamp mt-5 inline-flex h-11 items-center border border-amber bg-amber px-5 text-[12px] text-oil hover:bg-cream"
+        >
+          Cotizar una igual
+        </a>
+      </div>
     );
   }
 

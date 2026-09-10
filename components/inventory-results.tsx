@@ -16,11 +16,11 @@ export function InventoryResults({
         id="inventario-resultados"
         className="mt-5 border border-line bg-panel px-6 py-12 text-center"
       >
-        <p className="display text-4xl text-cream">Sin coincidencias</p>
+        <p className="display text-5xl text-cream">Sin coincidencias</p>
         <p className="mx-auto mt-3 max-w-md text-steel">
           {hasActiveFilters(query)
             ? "No hay piezas con esos filtros. Prueba otro SKU o limpia la búsqueda."
-            : "El patio todavía no tiene piezas en esta vitrina."}
+            : "No hay piezas en el inventario."}
         </p>
         {hasActiveFilters(query) ? (
           <Link
@@ -35,7 +35,7 @@ export function InventoryResults({
   }
 
   return (
-    <div id="inventario-resultados" className="mt-4 scroll-mt-24">
+    <div id="inventario-resultados" className="mt-5 scroll-mt-24">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {page.items.map((item) => (
             <ProductCard key={item.handle} item={item} compact />

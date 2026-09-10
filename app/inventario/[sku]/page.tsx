@@ -43,7 +43,7 @@ export default async function ProductPage({
     ["Familia", item.category],
     ["Condición", item.condition],
     ["Origen", item.origin],
-    ["Existencia", item.stock],
+    ["Existencia", item.availableForSale ? item.stock : "Agotada"],
     ["Compatibilidad", item.fit],
   ];
 
@@ -71,11 +71,16 @@ export default async function ProductPage({
           <span className="stamp absolute top-4 left-4 border border-amber bg-oil/80 px-3 py-1 text-[11px] text-amber">
             {item.sku}
           </span>
+          {item.variantId && !item.availableForSale ? (
+            <span className="stamp absolute inset-x-0 bottom-0 bg-amber px-4 py-3 text-center text-[12px] text-oil">
+              Agotada · Sin existencia en patio
+            </span>
+          ) : null}
         </div>
 
         <div className="flex flex-col lg:col-span-5">
           <p className="stamp text-[11px] text-amber">Pieza de tractocamión</p>
-          <h1 className="display mt-3 text-6xl text-cream md:text-7xl">
+          <h1 className="display mt-3 text-7xl text-cream md:text-8xl">
             {item.name}
           </h1>
           <p className="mt-4 text-2xl text-amber">{item.price}</p>
@@ -99,10 +104,6 @@ export default async function ProductPage({
               availableForSale={item.availableForSale}
             />
           </div>
-          <p className="mt-4 text-sm text-steel">
-            El pago se cierra en Shopify Checkout. El envío se confirma con el
-            patio.
-          </p>
         </div>
       </article>
 
@@ -111,7 +112,7 @@ export default async function ProductPage({
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="stamp text-[11px] text-amber">Más del patio</p>
-              <h2 className="display mt-2 text-5xl">Otras piezas</h2>
+              <h2 className="display mt-2 text-6xl">Otras piezas</h2>
             </div>
             <Link
               href="/inventario"

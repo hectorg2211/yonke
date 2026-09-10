@@ -131,7 +131,7 @@ const mockCatalog: Omit<
     stock: "En piso · a cotizar año",
     fit: "Tractocamión, según año de cabina",
     details:
-      "Cabina de tractocamión para cambio en patio. El precio de vitrina parte de 1,500 USD y se ajusta con el año. No incluye instalación: solo la pieza.",
+      "Cabina de tractocamión para cambio en patio. El precio parte de 1,500 USD y se ajusta con el año. No incluye instalación: solo la pieza.",
   },
   {
     sku: "YC-MTR-12",

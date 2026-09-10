@@ -73,7 +73,6 @@ export function Footer() {
       <div className="border-t border-line px-5 py-4 text-[12px] text-steel md:px-8">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2">
           <span className="stamp">{site.name}</span>
-          <span>Inventario en carga progresiva · Vista previa visual</span>
         </div>
       </div>
     </footer>

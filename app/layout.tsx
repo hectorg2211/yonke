@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Big_Shoulders_Stencil, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { Barlow, Bebas_Neue, IBM_Plex_Mono } from "next/font/google";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { CartDrawer } from "@/components/cart/cart-drawer";
@@ -11,16 +11,16 @@ import { isCustomerAccountConfigured } from "@/lib/shopify/env";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const display = Big_Shoulders_Stencil({
+const display = Bebas_Neue({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: "400",
 });
 
-const body = IBM_Plex_Sans({
+const body = Barlow({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const mono = IBM_Plex_Mono({
@@ -33,7 +33,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#06101c",
+  themeColor: "#101319",
   colorScheme: "dark",
 };
 
@@ -56,12 +56,16 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
-      className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
+      className={`${display.variable} ${body.variable} ${mono.variable} h-full w-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="grain flex min-h-full flex-col bg-oil text-cream">
+      <body
+        className="grain flex min-h-full w-full flex-col bg-oil text-cream"
+        suppressHydrationWarning
+      >
         <CartProvider initialCart={cart}>
           <Header account={{ enabled: accountEnabled, signedIn }} />
-          <main className="flex-1">{children}</main>
+          <main className="w-full flex-1">{children}</main>
           <Footer />
           <WhatsappFab />
           <CartDrawer />

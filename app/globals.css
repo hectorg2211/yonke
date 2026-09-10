@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --oil: #06101c;
-  --asphalt: #0b1c33;
-  --panel: #122848;
-  --rust: #4ea0f5;
-  --oxide: #0a3a8c;
-  --amber: #1e78e4;
-  --cream: #eef3f9;
-  --steel: #8fa8c4;
-  --paper: #f4f1ea;
+  --oil: #101319;
+  --asphalt: #151a21;
+  --panel: #1a1f27;
+  --rust: #3e7cb1;
+  --oxide: #264a68;
+  --amber: #c8a24e;
+  --cream: #e9ebee;
+  --steel: #98a0ab;
+  --paper: #ede8df;
   --line: color-mix(in srgb, var(--cream) 16%, transparent);
 }
 
@@ -34,12 +34,58 @@ html {
   background: var(--oil);
   color-scheme: dark;
   overscroll-behavior-y: none;
+  overflow-x: clip;
+  scrollbar-width: thin;
+  scrollbar-color: var(--amber) var(--oil);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--amber) var(--oil);
+}
+
+::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: var(--oil);
+}
+
+::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background: var(--amber);
+  border: 2px solid var(--oil);
+}
+
+::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--rust);
+}
+
+::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-corner {
+  background: var(--oil);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 body {
   background: var(--oil);
   color: var(--cream);
   font-family: var(--font-body), sans-serif;
+  overflow-x: clip;
 }
 
 button:not(:disabled),
@@ -115,8 +161,8 @@ a.whatsapp-fab:active {
 
 .display {
   font-family: var(--font-display), sans-serif;
-  letter-spacing: -0.03em;
-  line-height: 0.86;
+  letter-spacing: 0.01em;
+  line-height: 0.94;
   text-transform: uppercase;
 }
 

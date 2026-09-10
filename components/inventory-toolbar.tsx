@@ -18,7 +18,7 @@ const chipClass =
 function chipTone(active: boolean) {
   return active
     ? "border-amber bg-amber text-oil"
-    : "border-line bg-asphalt text-steel hover:border-amber hover:text-amber";
+    : "border-line bg-panel text-steel hover:border-amber hover:text-amber";
 }
 
 export function InventoryToolbar({
@@ -34,6 +34,11 @@ export function InventoryToolbar({
   const [, startTransition] = useTransition();
 
   queryRef.current = query;
+
+  const familyOptions = families.map((family) => ({
+    value: family === "Todos" ? "" : family,
+    label: family,
+  }));
 
   useEffect(() => {
     setDraft(query.q);
@@ -57,11 +62,18 @@ export function InventoryToolbar({
     });
   }
 
+  const stockHref = inventoryHref(query, {
+    stock: query.stock === "disponible" ? "todos" : "disponible",
+    pagina: 1,
+  });
+  const stockActive = query.stock === "disponible";
+  const filtersOn = hasActiveFilters(query);
+
   return (
     <form
       action="/inventario"
       method="get"
-      className="mt-4 grid gap-3"
+      className="mt-5 grid min-w-0 gap-4"
       role="search"
       aria-label="Buscar en el inventario"
       onSubmit={(event) => {
@@ -109,8 +121,45 @@ export function InventoryToolbar({
         ) : null}
       </label>
 
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto scrollbar-none">
+      <div className="grid grid-cols-2 gap-4 md:hidden">
+        <InventorySelect
+          label="Familia"
+          value={query.familia}
+          options={familyOptions}
+          onChange={(value) => navigate({ familia: value })}
+          align="left"
+          fullWidth
+          labelPlacement="above"
+        />
+        <InventorySelect
+          label="Ordenar"
+          value={query.orden}
+          options={SORT_OPTIONS}
+          onChange={(value) => navigate({ orden: value as InventorySort })}
+          fullWidth
+          labelPlacement="above"
+        />
+      </div>
+
+      <div className="flex gap-4 md:hidden">
+        <Link
+          href={stockHref}
+          className={`${chipClass} min-w-0 flex-1 justify-center ${chipTone(stockActive)}`}
+        >
+          En venta
+        </Link>
+        {filtersOn ? (
+          <Link
+            href="/inventario"
+            className={`${chipClass} min-w-0 flex-1 justify-center border-line bg-panel text-steel hover:border-amber hover:text-amber`}
+          >
+            Limpiar
+          </Link>
+        ) : null}
+      </div>
+
+      <div className="hidden min-w-0 items-center gap-4 md:flex">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
           {families.map((family) => {
             const value = family === "Todos" ? "" : family;
             const active = query.familia === value;
@@ -125,17 +174,13 @@ export function InventoryToolbar({
               </Link>
             );
           })}
-          <span aria-hidden className="mx-1 h-5 w-px shrink-0 bg-line" />
           <Link
-            href={inventoryHref(query, {
-              stock: query.stock === "disponible" ? "todos" : "disponible",
-              pagina: 1,
-            })}
-            className={`${chipClass} ${chipTone(query.stock === "disponible")}`}
+            href={stockHref}
+            className={`${chipClass} ${chipTone(stockActive)}`}
           >
             En venta
           </Link>
-          {hasActiveFilters(query) ? (
+          {filtersOn ? (
             <Link
               href="/inventario"
               className={`${chipClass} border-line bg-transparent text-steel hover:border-amber hover:text-amber`}

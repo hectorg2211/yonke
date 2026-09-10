@@ -147,7 +147,7 @@ export function Header({ account }: { account: HeaderAccount }) {
             ) : (
               <a
                 href="/api/auth/shopify/login?returnTo=/cuenta"
-                className="display py-3 text-4xl text-cream"
+                className="display py-3 text-5xl text-cream"
               >
                 Entrar
               </a>

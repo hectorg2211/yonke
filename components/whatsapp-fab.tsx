@@ -22,7 +22,7 @@ export function WhatsappFab() {
       )}
       target="_blank"
       rel="noopener noreferrer"
-      className="whatsapp-fab fixed right-5 bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] z-[90] grid size-14 place-items-center rounded-full bg-[#25D366] text-white shadow-[4px_4px_0_#06101c]"
+      className="whatsapp-fab fixed right-5 bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] z-[90] grid size-14 place-items-center rounded-full bg-[#25D366] text-white"
       aria-label={`Abrir WhatsApp ${site.whatsapp}`}
     >
       <WhatsappMark className="size-8" />

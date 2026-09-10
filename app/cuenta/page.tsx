@@ -10,10 +10,8 @@ export const metadata: Metadata = {
 };
 
 const ERRORS: Record<string, string> = {
-  config:
-    "Faltan las credenciales de Customer Account API en el servidor.",
-  https:
-    "Shopify solo acepta login por HTTPS público. En local usa un túnel y SHOPIFY_CUSTOMER_ACCOUNT_ORIGIN.",
+  config: "La cuenta no está disponible. Intenta más tarde.",
+  https: "No se pudo iniciar sesión. Intenta de nuevo.",
   login: "No se pudo iniciar sesión. Intenta de nuevo.",
 };
 
@@ -71,11 +69,10 @@ export default async function CuentaPage({
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-10 md:px-8 md:py-16">
-      <p className="stamp text-[11px] text-amber">YC-CUENTA</p>
-      <h1 className="display mt-3 text-6xl text-cream md:text-8xl">Cuenta</h1>
+      <p className="stamp text-[11px] text-amber">Cliente</p>
+      <h1 className="display mt-3 text-7xl text-cream md:text-9xl">Cuenta</h1>
       <p className="mt-4 max-w-xl text-steel">
-        Pedidos, datos de envío y sesión de Shopify. El pago sigue cerrándose
-        en Checkout.
+        Pedidos, datos de envío y sesión del cliente.
       </p>
 
       {error ? (
@@ -92,14 +89,10 @@ export default async function CuentaPage({
 
       {!configured ? (
         <div className="mt-10 border border-line bg-asphalt px-5 py-8">
-          <p className="stamp text-[10px] text-amber">Shopify Headless</p>
-          <p className="mt-3 text-cream">
-            La cuenta de cliente todavía no está conectada.
-          </p>
+          <p className="stamp text-[10px] text-amber">Cliente</p>
+          <p className="mt-3 text-cream">La cuenta no está disponible.</p>
           <p className="mt-3 max-w-lg text-sm leading-6 text-steel">
-            En Shopify Admin instala el canal Headless, activa Customer
-            accounts y pega el client ID en{" "}
-            <span className="text-cream">SHOPIFY_CUSTOMER_ACCOUNT_CLIENT_ID</span>.
+            Puedes seguir cotizando por WhatsApp o revisar el inventario.
           </p>
         </div>
       ) : null}
@@ -108,7 +101,7 @@ export default async function CuentaPage({
         <div className="mt-10 border border-line bg-asphalt px-5 py-8">
           <p className="stamp text-[10px] text-amber">Cliente</p>
           <p className="mt-3 text-cream">
-            Entra con tu cuenta de Shopify para ver pedidos y datos de envío.
+            Entra con tu cuenta para ver pedidos y datos de envío.
           </p>
           <a
             href="/api/auth/shopify/login?returnTo=/cuenta"
@@ -124,7 +117,7 @@ export default async function CuentaPage({
           <section className="grid gap-6 border border-line bg-asphalt p-5 md:grid-cols-2">
             <div>
               <p className="stamp text-[10px] text-steel">Cliente</p>
-              <p className="display mt-3 text-4xl text-cream">
+              <p className="display mt-3 text-5xl text-cream">
                 {customer.displayName}
               </p>
               {customer.email ? (
@@ -161,7 +154,7 @@ export default async function CuentaPage({
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="stamp text-[10px] text-amber">Historial</p>
-                <h2 className="display mt-2 text-4xl text-cream">Pedidos</h2>
+                <h2 className="display mt-2 text-5xl text-cream">Pedidos</h2>
               </div>
               <Link
                 href="/inventario"
@@ -183,7 +176,7 @@ export default async function CuentaPage({
                     className="grid gap-3 border border-line bg-asphalt px-4 py-4 md:grid-cols-[1fr_auto] md:items-center"
                   >
                     <div>
-                      <p className="display text-3xl text-cream">{order.name}</p>
+                      <p className="display text-4xl text-cream">{order.name}</p>
                       <p className="mt-2 text-sm text-steel">
                         {formatDate(order.processedAt)} ·{" "}
                         {label(FINANCIAL, order.financialStatus)} ·{" "}

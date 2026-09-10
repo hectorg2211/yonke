@@ -55,15 +55,14 @@ export function CartDrawer() {
         aria-modal="true"
         aria-labelledby="cart-title"
         aria-hidden={!open}
-        className={`fixed inset-y-0 right-0 z-120 flex w-full max-w-md flex-col border-l border-line bg-oil shadow-[-12px_0_0_#06101c] transition-transform duration-300 ${
-          open ? "translate-x-0" : "pointer-events-none translate-x-full"
+        className={`fixed inset-y-0 right-0 z-120 flex w-full max-w-md flex-col border-l border-line bg-oil transition-transform duration-300 ${
+          open ? "translate-x-0" : "pointer-events-none translate-x-[calc(100%+1px)]"
         }`}
       >
         <div className="hazard h-2 shrink-0" />
         <div className="flex items-start justify-between gap-4 border-b border-line px-5 py-4">
           <div>
-            <p className="stamp text-[10px] text-steel">YC-CART</p>
-            <h2 id="cart-title" className="display mt-1 text-4xl text-cream">
+            <h2 id="cart-title" className="display mt-1 text-5xl text-cream">
               Carrito
             </h2>
             <p className="mt-1 text-sm text-steel">
@@ -127,7 +126,7 @@ export function CartDrawer() {
                     <Link
                       href={productPath(line.handle)}
                       onClick={closeCart}
-                      className="display block truncate text-2xl text-cream hover:text-amber"
+                      className="display block truncate text-3xl text-cream hover:text-amber"
                     >
                       {line.title}
                     </Link>
@@ -197,9 +196,6 @@ export function CartDrawer() {
               Ir a pagar
             </a>
           )}
-          <p className="mt-3 text-xs leading-5 text-steel">
-            El pago se cierra en Shopify Checkout.
-          </p>
         </div>
       </aside>
     </>

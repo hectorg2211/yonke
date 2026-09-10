@@ -9,7 +9,7 @@ export default async function Home() {
   const featured = (await getCatalog()).slice(0, 3);
   return (
     <>
-      <section className="relative isolate min-h-[88dvh] overflow-hidden">
+      <section className="relative isolate min-h-[34rem] overflow-hidden md:min-h-[88dvh]">
         <Image
           src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=2400&q=80"
           alt="Tractocamión en el patio"
@@ -19,12 +19,12 @@ export default async function Home() {
         />
         <div className="absolute inset-0 bg-oil/70" />
         <div className="absolute inset-0 bg-linear-to-r from-oil via-oil/70 to-transparent" />
-        <div className="relative mx-auto flex min-h-[88dvh] max-w-7xl flex-col justify-end gap-10 px-5 py-16 md:px-8 md:py-24">
+        <div className="relative mx-auto flex min-h-[34rem] w-full max-w-7xl flex-col justify-end gap-8 px-5 py-12 md:min-h-[88dvh] md:gap-10 md:px-8 md:py-24">
           <div className="max-w-4xl">
-            <p className="stamp text-[11px] text-amber">
+            <p className="stamp max-w-sm text-[11px] leading-6 text-amber md:max-w-none">
               {site.city} · Mesa de Otay · Envíos a toda la República
             </p>
-            <h1 className="display mt-5 text-[18vw] text-cream md:text-[9.5rem]">
+            <h1 className="display mt-5 text-[clamp(3.75rem,13vw,7.5rem)] text-cream md:text-[9rem] lg:text-[11rem]">
               Partes
               <br />
               de tracto
@@ -50,22 +50,19 @@ export default async function Home() {
             </Link>
           </div>
         </div>
-        <div className="absolute right-5 bottom-8 hidden stamp text-[11px] text-cream/60 md:block">
-          YC-00 · Solo partes
-        </div>
       </section>
 
       <section className="border-y border-line bg-asphalt">
         <div className="mx-auto grid max-w-7xl gap-8 px-5 py-8 md:grid-cols-3 md:px-8">
           {[
-            ["01", "Catálogo", "Piezas de tractocamión en el patio, subidas de a poco."],
+            ["01", "Catálogo", "Piezas de tractocamión en el patio, listas para cotizar."],
             ["02", "Envío", "El cliente ordena. El yonke manda a toda la República."],
             ["03", "Cotizar", "Si no está en piso, se cotiza por año y tipo de pieza."],
           ].map(([code, title, copy]) => (
             <div key={code} className="flex gap-4">
               <span className="stamp text-amber">{code}</span>
               <div>
-                <h2 className="display text-3xl">{title}</h2>
+                <h2 className="display text-4xl">{title}</h2>
                 <p className="mt-2 text-sm leading-6 text-steel">{copy}</p>
               </div>
             </div>
@@ -77,7 +74,7 @@ export default async function Home() {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="stamp text-[11px] text-amber">En el patio ahora</p>
-            <h2 className="display mt-3 text-6xl md:text-8xl">Inventario</h2>
+            <h2 className="display mt-3 text-7xl md:text-9xl">Inventario</h2>
           </div>
           <Link
             href="/inventario"
@@ -97,7 +94,7 @@ export default async function Home() {
         <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:grid-cols-2 md:px-8">
           <div>
             <p className="stamp text-[11px] text-amber">Lo que se vende</p>
-            <h2 className="display mt-3 text-6xl md:text-8xl">
+            <h2 className="display mt-3 text-7xl md:text-9xl">
               Solo
               <br />
               partes
@@ -118,7 +115,7 @@ export default async function Home() {
               <li key={family.code} className="flex gap-5 bg-asphalt p-6">
                 <span className="stamp text-amber">{family.code}</span>
                 <div>
-                  <h3 className="display text-4xl">{family.title}</h3>
+                  <h3 className="display text-5xl">{family.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-steel">{family.copy}</p>
                 </div>
               </li>
@@ -137,7 +134,7 @@ export default async function Home() {
         <div className="absolute inset-0 bg-oil/75" />
         <div className="relative mx-auto max-w-7xl px-5 py-24 md:px-8">
           <p className="stamp text-[11px] text-amber">Cotización</p>
-          <h2 className="display mt-4 max-w-3xl text-6xl md:text-8xl">
+          <h2 className="display mt-4 max-w-3xl text-7xl md:text-9xl">
             Cabina, motor o pieza. El año decide el precio.
           </h2>
           <p className="mt-6 max-w-lg text-cream/75">

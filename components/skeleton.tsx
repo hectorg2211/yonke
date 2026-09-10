@@ -8,28 +8,31 @@ export function Bone({
 
 export function InventoryGridSkeleton() {
   return (
-    <div className="mt-4" role="status" aria-live="polite">
+    <div className="mt-5" role="status" aria-live="polite">
       <span className="sr-only">Cargando inventario</span>
       <div className="relative" aria-hidden>
         <Bone className="h-11 border border-line" />
         <div className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 rounded-full bg-line/40" />
       </div>
+      <div className="mt-4 grid grid-cols-2 gap-4 md:hidden" aria-hidden>
+        <Bone className="h-11 border border-line" />
+        <Bone className="h-11 border border-line" />
+      </div>
       <div
-        className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+        className="mt-4 hidden items-center justify-between gap-4 md:flex"
         aria-hidden
       >
-        <div className="flex min-w-0 flex-1 gap-2 overflow-hidden">
+        <div className="flex min-w-0 flex-1 flex-wrap gap-2">
           <Bone className="h-11 w-16 shrink-0 border border-line" />
           <Bone className="h-11 w-20 shrink-0 border border-line" />
           <Bone className="h-11 w-20 shrink-0 border border-line" />
           <Bone className="h-11 w-24 shrink-0 border border-line" />
           <Bone className="h-11 w-24 shrink-0 border border-line" />
           <Bone className="h-11 w-16 shrink-0 border border-line" />
-          <Bone className="h-11 w-20 shrink-0 border border-line" />
         </div>
         <Bone className="h-11 w-40 shrink-0 border border-line" />
       </div>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-hidden>
+      <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-hidden>
         {Array.from({ length: 6 }, (_, index) => (
           <ProductCardSkeleton key={index} />
         ))}
