@@ -16,7 +16,7 @@ export function Footer() {
             alt={site.name}
             width={1206}
             height={1009}
-            className="h-16 w-auto max-w-80 object-contain object-left md:h-20 md:max-w-xl"
+            className="h-32 w-auto max-w-80 object-contain object-left md:h-40 md:max-w-xl"
           />
           <p className="mt-5 max-w-sm text-steel">
             Venta de partes para tractocamión. Inventario de patio y envíos a

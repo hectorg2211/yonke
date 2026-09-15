@@ -23,8 +23,28 @@ export function CartDrawer() {
   useEffect(() => {
     if (!open) return;
 
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const html = document.documentElement;
+    const { body } = document;
+    const scrollY = window.scrollY;
+    const previous = {
+      htmlOverflow: html.style.overflow,
+      htmlOverscroll: html.style.overscrollBehavior,
+      bodyOverflow: body.style.overflow,
+      bodyPosition: body.style.position,
+      bodyTop: body.style.top,
+      bodyLeft: body.style.left,
+      bodyRight: body.style.right,
+      bodyWidth: body.style.width,
+    };
+
+    html.style.overflow = "hidden";
+    html.style.overscrollBehavior = "none";
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
     closeRef.current?.focus();
 
     function onKey(event: KeyboardEvent) {
@@ -33,8 +53,16 @@ export function CartDrawer() {
 
     window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = previous;
+      html.style.overflow = previous.htmlOverflow;
+      html.style.overscrollBehavior = previous.htmlOverscroll;
+      body.style.overflow = previous.bodyOverflow;
+      body.style.position = previous.bodyPosition;
+      body.style.top = previous.bodyTop;
+      body.style.left = previous.bodyLeft;
+      body.style.right = previous.bodyRight;
+      body.style.width = previous.bodyWidth;
       window.removeEventListener("keydown", onKey);
+      window.scrollTo(0, scrollY);
     };
   }, [open, closeCart]);
 
@@ -45,7 +73,7 @@ export function CartDrawer() {
         tabIndex={open ? 0 : -1}
         aria-label="Cerrar carrito"
         onClick={closeCart}
-        className={`fixed inset-0 z-110 bg-ink/45 transition-opacity ${
+        className={`fixed inset-0 z-110 touch-none overscroll-none bg-ink/45 transition-opacity ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
@@ -55,12 +83,12 @@ export function CartDrawer() {
         aria-modal="true"
         aria-labelledby="cart-title"
         aria-hidden={!open}
-        className={`fixed inset-y-0 right-0 z-120 flex w-full max-w-md flex-col border-l border-line bg-paper transition-transform duration-300 ${
+        className={`fixed top-0 right-0 z-120 flex h-svh max-h-svh w-full max-w-md flex-col overflow-hidden overscroll-contain border-l border-line bg-paper transition-transform duration-300 ${
           open ? "translate-x-0" : "pointer-events-none translate-x-[calc(100%+1px)]"
         }`}
       >
         <div className="hazard h-2 shrink-0" />
-        <div className="flex items-start justify-between gap-4 border-b border-line px-5 py-4">
+        <div className="flex shrink-0 items-start justify-between gap-4 border-b border-line px-5 py-4">
           <div>
             <h2 id="cart-title" className="display mt-1 text-5xl text-cream">
               Carrito
@@ -87,7 +115,7 @@ export function CartDrawer() {
           </p>
         ) : null}
 
-        <div className="flex-1 overflow-y-auto px-5 py-5">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5">
           {empty ? (
             <div className="border border-line bg-asphalt px-5 py-8">
               <p className="stamp text-[10px] text-rust">Patio</p>
@@ -174,7 +202,7 @@ export function CartDrawer() {
           )}
         </div>
 
-        <div className="border-t border-line bg-asphalt px-5 py-5">
+        <div className="shrink-0 border-t border-line bg-asphalt px-5 pt-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="stamp text-[10px] text-steel">Total</p>
