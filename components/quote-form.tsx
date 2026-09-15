@@ -28,7 +28,7 @@ export function QuoteForm() {
         <select
           value={kind}
           onChange={(event) => setKind(event.target.value)}
-          className="h-12 border border-line bg-oil px-3 text-cream"
+          className="h-12 border border-line bg-panel px-3 text-cream focus-visible:border-rust focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rust"
         >
           {kinds.map((item) => (
             <option key={item}>{item}</option>
@@ -42,7 +42,7 @@ export function QuoteForm() {
           onChange={(event) => setYear(event.target.value)}
           inputMode="numeric"
           placeholder="2005"
-          className="h-12 border border-line bg-oil px-3 text-cream placeholder:text-steel"
+          className="h-12 border border-line bg-panel px-3 text-cream placeholder:text-steel focus-visible:border-rust focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rust"
         />
       </label>
       <label className="grid gap-2">
@@ -52,12 +52,12 @@ export function QuoteForm() {
           onChange={(event) => setNote(event.target.value)}
           rows={4}
           placeholder="Cabina para tractocamión, sin golpe estructural."
-          className="border border-line bg-oil px-3 py-3 text-cream placeholder:text-steel"
+          className="border border-line bg-panel px-3 py-3 text-cream placeholder:text-steel focus-visible:border-rust focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rust"
         />
       </label>
       <button
         type="submit"
-        className="stamp h-12 border border-amber bg-amber text-[12px] text-oil hover:bg-cream"
+        className="stamp h-12 border border-rust bg-rust text-[12px] text-paper hover:bg-paper hover:text-ink"
       >
         Pedir cotización
       </button>

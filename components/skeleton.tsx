@@ -95,7 +95,7 @@ export function ProductPageSkeleton() {
             {Array.from({ length: 6 }, (_, index) => (
               <div
                 key={index}
-                className="grid grid-cols-[7.5rem_1fr] gap-4 bg-oil py-3 md:grid-cols-[8.5rem_1fr]"
+                className="grid grid-cols-[7.5rem_1fr] gap-4 bg-panel py-3 md:grid-cols-[8.5rem_1fr]"
               >
                 <Bone className="h-3 w-16" />
                 <Bone className="h-4 w-40 max-w-full" />

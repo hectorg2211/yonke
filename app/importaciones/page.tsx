@@ -11,7 +11,7 @@ export default function ImportacionesPage() {
   return (
     <div className="mx-auto grid max-w-7xl gap-12 px-5 py-14 md:grid-cols-12 md:px-8 md:py-20">
       <div className="md:col-span-6">
-        <p className="stamp text-[11px] text-amber">Cotización</p>
+        <p className="stamp text-[11px] text-rust">Cotización</p>
         <h1 className="display mt-4 text-8xl md:text-9xl">
           Cotizar
           <br />
@@ -34,7 +34,7 @@ export default function ImportacionesPage() {
       </div>
 
       <div className="border border-line bg-panel p-6 md:col-span-6 md:p-8">
-        <p className="stamp text-[11px] text-amber">Datos de la pieza</p>
+        <p className="stamp text-[11px] text-rust">Datos de la pieza</p>
         <p className="mt-2 text-sm text-steel">
           Cuéntanos qué buscas y te respondemos por WhatsApp.
         </p>

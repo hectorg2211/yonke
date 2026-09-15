@@ -5,7 +5,7 @@ import { Header } from "@/components/header";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { WhatsappFab } from "@/components/whatsapp-fab";
-import { getCart } from "@/app/actions/cart";
+import { loadCart } from "@/lib/shopify/load-cart";
 import { isCustomerSignedIn } from "@/lib/shopify/customer-session";
 import { isCustomerAccountConfigured } from "@/lib/shopify/env";
 import { site } from "@/lib/site";
@@ -33,8 +33,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#101319",
-  colorScheme: "dark",
+  themeColor: "#f3efe6",
+  colorScheme: "light",
 };
 
 export const metadata: Metadata = {
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const accountEnabled = isCustomerAccountConfigured();
   const [cart, signedIn] = await Promise.all([
-    getCart(),
+    loadCart(),
     accountEnabled ? isCustomerSignedIn() : Promise.resolve(false),
   ]);
 

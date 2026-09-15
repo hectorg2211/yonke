@@ -4,6 +4,7 @@ import { cache } from "react";
 import type { CatalogItem } from "@/lib/site";
 import { formatMoney, type Money } from "@/lib/shopify/money";
 import { storefrontFetch } from "@/lib/shopify/storefront";
+import { isLowStock, lowStockMessage } from "@/lib/stock";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1400&q=80";
@@ -32,6 +33,7 @@ const PRODUCT_FIELDS = `
       title
       sku
       availableForSale
+      quantityAvailable
       price {
         amount
         currencyCode
@@ -97,6 +99,7 @@ type StorefrontProductNode = {
       title: string;
       sku: string | null;
       availableForSale: boolean;
+      quantityAvailable: number | null;
       price: Money;
     }>;
   };
@@ -127,6 +130,10 @@ export function mapStorefrontProduct(product: StorefrontProductNode): CatalogIte
   const sku = variant?.sku?.trim();
   const family = product.productType.trim() || "Pieza";
   const amount = Number.parseFloat(product.priceRange.minVariantPrice.amount);
+  const quantity =
+    typeof variant?.quantityAvailable === "number"
+      ? variant.quantityAvailable
+      : null;
 
   return {
     handle: product.handle,
@@ -140,11 +147,17 @@ export function mapStorefrontProduct(product: StorefrontProductNode): CatalogIte
     imageAlt: product.featuredImage?.altText || product.title,
     condition: available ? "Disponible" : "Sin existencia",
     origin: product.vendor || "Patio Otay",
-    stock: available ? "En venta" : "Agotada",
+    stock:
+      !available
+        ? "Agotada"
+        : isLowStock(quantity, available)
+          ? lowStockMessage(quantity)
+          : "En venta",
     fit: family === "Pieza" ? "Tractocamión" : family,
     details: product.description || product.title,
     variantId: variant?.id ?? null,
     availableForSale: available,
+    quantityAvailable: quantity,
   };
 }
 

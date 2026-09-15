@@ -69,27 +69,27 @@ export default async function CuentaPage({
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-10 md:px-8 md:py-16">
-      <p className="stamp text-[11px] text-amber">Cliente</p>
+      <p className="stamp text-[11px] text-rust">Cliente</p>
       <h1 className="display mt-3 text-7xl text-cream md:text-9xl">Cuenta</h1>
       <p className="mt-4 max-w-xl text-steel">
         Pedidos, datos de envío y sesión del cliente.
       </p>
 
       {error ? (
-        <p className="mt-6 border border-rust/40 bg-oxide/20 px-4 py-3 text-sm text-amber">
+        <p className="mt-6 border border-rust/40 bg-oxide px-4 py-3 text-sm text-ink">
           {error}
         </p>
       ) : null}
 
       {loadError ? (
-        <p className="mt-6 border border-rust/40 bg-oxide/20 px-4 py-3 text-sm text-amber">
+        <p className="mt-6 border border-rust/40 bg-oxide px-4 py-3 text-sm text-ink">
           {loadError}
         </p>
       ) : null}
 
       {!configured ? (
         <div className="mt-10 border border-line bg-asphalt px-5 py-8">
-          <p className="stamp text-[10px] text-amber">Cliente</p>
+          <p className="stamp text-[10px] text-rust">Cliente</p>
           <p className="mt-3 text-cream">La cuenta no está disponible.</p>
           <p className="mt-3 max-w-lg text-sm leading-6 text-steel">
             Puedes seguir cotizando por WhatsApp o revisar el inventario.
@@ -99,13 +99,13 @@ export default async function CuentaPage({
 
       {configured && !customer ? (
         <div className="mt-10 border border-line bg-asphalt px-5 py-8">
-          <p className="stamp text-[10px] text-amber">Cliente</p>
+          <p className="stamp text-[10px] text-rust">Cliente</p>
           <p className="mt-3 text-cream">
             Entra con tu cuenta para ver pedidos y datos de envío.
           </p>
           <a
             href="/api/auth/shopify/login?returnTo=/cuenta"
-            className="stamp mt-6 inline-flex border border-amber bg-amber px-5 py-3 text-[12px] text-oil hover:bg-cream"
+            className="stamp mt-6 inline-flex border border-rust bg-rust px-5 py-3 text-[12px] text-paper hover:bg-paper hover:text-ink"
           >
             Iniciar sesión
           </a>
@@ -143,7 +143,7 @@ export default async function CuentaPage({
             <div className="md:col-span-2">
               <a
                 href="/api/auth/shopify/logout"
-                className="stamp border border-line px-4 py-2 text-[11px] text-cream hover:border-amber hover:text-amber"
+                className="stamp border border-line px-4 py-2 text-[11px] text-cream hover:border-rust hover:text-rust"
               >
                 Cerrar sesión
               </a>
@@ -153,12 +153,12 @@ export default async function CuentaPage({
           <section>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
-                <p className="stamp text-[10px] text-amber">Historial</p>
+                <p className="stamp text-[10px] text-rust">Historial</p>
                 <h2 className="display mt-2 text-5xl text-cream">Pedidos</h2>
               </div>
               <Link
                 href="/inventario"
-                className="stamp text-[11px] text-steel underline decoration-rust underline-offset-4 hover:text-amber"
+                className="stamp text-[11px] text-steel underline decoration-rust underline-offset-4 hover:text-rust"
               >
                 Seguir viendo inventario
               </Link>
@@ -188,7 +188,7 @@ export default async function CuentaPage({
                       {order.statusPageUrl ? (
                         <a
                           href={order.statusPageUrl}
-                          className="stamp text-[10px] text-cream underline decoration-rust underline-offset-4 hover:text-amber"
+                          className="stamp text-[10px] text-cream underline decoration-rust underline-offset-4 hover:text-rust"
                         >
                           Ver pedido
                         </a>

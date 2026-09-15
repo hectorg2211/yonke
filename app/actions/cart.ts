@@ -8,12 +8,9 @@ import {
   removeCartLines,
   updateCartLines,
 } from "@/lib/shopify/cart";
-import { withSilentSso } from "@/lib/shopify/checkout";
 import { clearCartId, readCartId, writeCartId } from "@/lib/shopify/cart-cookie";
-import {
-  getCustomerAccessToken,
-  isCustomerSignedIn,
-} from "@/lib/shopify/customer-session";
+import { withCheckoutSession } from "@/lib/shopify/load-cart";
+import { getCustomerAccessToken } from "@/lib/shopify/customer-session";
 import type { CartActionResult, CartView } from "@/lib/shopify/cart-types";
 
 const VARIANT_PREFIX = "gid://shopify/ProductVariant/";
@@ -28,11 +25,6 @@ function fail(error: unknown, fallback: string): CartActionResult {
     ok: false,
     error: error instanceof Error ? error.message : fallback,
   };
-}
-
-async function withCheckoutSession(cart: CartView): Promise<CartView> {
-  if (!(await isCustomerSignedIn())) return cart;
-  return { ...cart, checkoutUrl: withSilentSso(cart.checkoutUrl) };
 }
 
 async function persist(cart: CartView): Promise<CartView> {

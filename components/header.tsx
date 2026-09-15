@@ -20,8 +20,8 @@ export function Header({ account }: { account: HeaderAccount }) {
     href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`)
 
   return (
-    <header className='sticky top-0 z-100 border-b border-line bg-oil'>
-      <div aria-hidden className='pointer-events-none absolute inset-x-0 bottom-full h-24 bg-oil' />
+    <header className='sticky top-0 z-100 border-b border-rust/25 bg-paper'>
+      <div aria-hidden className='pointer-events-none absolute inset-x-0 bottom-full h-24 bg-paper' />
       <div className='mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 md:px-8'>
         <div className='flex min-w-0 items-center gap-6 lg:gap-8'>
           <Link
@@ -33,8 +33,8 @@ export function Header({ account }: { account: HeaderAccount }) {
             <Image
               src='/assets/logo-long.png'
               alt='Yonke El Cuñado Tractopartes y Servicios'
-              width={1363}
-              height={294}
+              width={2749}
+              height={656}
               priority
               className='h-9 w-auto max-w-44 object-contain object-left md:h-11 md:max-w-60'
             />
@@ -47,7 +47,7 @@ export function Header({ account }: { account: HeaderAccount }) {
                   key={item.href}
                   href={item.href}
                   className={`stamp text-[11px] transition-colors ${
-                    isActive(item.href) ? 'text-amber' : 'text-steel hover:text-cream'
+                    isActive(item.href) ? 'text-rust' : 'text-steel hover:text-rust'
                   }`}
                 >
                   {item.label}
@@ -59,7 +59,7 @@ export function Header({ account }: { account: HeaderAccount }) {
         <div className='hidden items-center gap-4 md:flex lg:gap-6'>
           <Link
             href='/importaciones'
-            className='stamp border border-amber bg-amber px-4 py-2 text-[11px] text-oil transition-colors hover:bg-cream'
+            className='stamp inline-flex h-11 items-center border border-rust bg-rust px-4 text-[11px] text-paper transition-colors hover:bg-paper hover:text-ink'
           >
             Cotizar
           </Link>
@@ -68,14 +68,14 @@ export function Header({ account }: { account: HeaderAccount }) {
               <Link
                 href='/cuenta'
                 className={`stamp text-[11px] transition-colors ${
-                  isActive('/cuenta') ? 'text-amber' : 'text-steel hover:text-cream'
+                  isActive('/cuenta') ? 'text-rust' : 'text-steel hover:text-rust'
                 }`}
               >
                 Cuenta
               </Link>
             : <a
                 href='/api/auth/shopify/login?returnTo=/cuenta'
-                className='stamp text-[11px] text-steel hover:text-cream'
+                className='stamp text-[11px] text-steel hover:text-rust'
               >
                 Entrar
               </a>
@@ -88,7 +88,7 @@ export function Header({ account }: { account: HeaderAccount }) {
           {account.enabled && account.signedIn ?
             <Link
               href='/cuenta'
-              className='stamp border border-line px-3 py-2 text-[10px] text-cream hover:border-amber hover:text-amber'
+              className='stamp border border-line px-3 py-2 text-[10px] text-cream hover:border-rust hover:text-rust'
             >
               Cuenta
             </Link>
@@ -113,7 +113,7 @@ export function Header({ account }: { account: HeaderAccount }) {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className={`display py-3 text-4xl ${isActive(item.href) ? 'text-amber' : 'text-cream'}`}
+              className={`display py-3 text-4xl ${isActive(item.href) ? 'text-rust' : 'text-cream'}`}
             >
               {item.label}
             </Link>
@@ -123,7 +123,7 @@ export function Header({ account }: { account: HeaderAccount }) {
               <Link
                 href='/cuenta'
                 onClick={() => setOpen(false)}
-                className={`display py-3 text-4xl ${isActive('/cuenta') ? 'text-amber' : 'text-cream'}`}
+                className={`display py-3 text-4xl ${isActive('/cuenta') ? 'text-rust' : 'text-cream'}`}
               >
                 Cuenta
               </Link>

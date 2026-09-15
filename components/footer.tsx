@@ -14,8 +14,8 @@ export function Footer() {
           <Image
             src="/assets/logo.png"
             alt={site.name}
-            width={1363}
-            height={294}
+            width={1206}
+            height={1009}
             className="h-16 w-auto max-w-80 object-contain object-left md:h-20 md:max-w-xl"
           />
           <p className="mt-5 max-w-sm text-steel">
@@ -28,14 +28,14 @@ export function Footer() {
           <ul className="mt-4 grid gap-2">
             {nav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-cream hover:text-amber">
+                <Link href={item.href} className="text-cream hover:text-rust">
                   {item.label}
                 </Link>
               </li>
             ))}
             {accountEnabled ? (
               <li>
-                <Link href="/cuenta" className="text-cream hover:text-amber">
+                <Link href="/cuenta" className="text-cream hover:text-rust">
                   Cuenta
                 </Link>
               </li>
@@ -56,7 +56,7 @@ export function Footer() {
             href={whatsappUrl()}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 block text-cream hover:text-amber"
+            className="mt-2 block text-cream hover:text-rust"
           >
             WhatsApp {site.whatsapp}
           </a>
@@ -64,7 +64,7 @@ export function Footer() {
             href={location.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="stamp mt-4 inline-block text-[11px] text-amber underline decoration-rust underline-offset-4 hover:text-cream"
+            className="stamp mt-4 inline-block text-[11px] text-rust underline decoration-rust underline-offset-4 hover:text-cream"
           >
             Ver en Google Maps
           </a>

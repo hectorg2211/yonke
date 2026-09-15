@@ -110,11 +110,12 @@ export type CatalogItem = {
   details: string;
   variantId: string | null;
   availableForSale: boolean;
+  quantityAvailable: number | null;
 };
 
 const mockCatalog: Omit<
   CatalogItem,
-  "handle" | "variantId" | "availableForSale"
+  "handle" | "variantId" | "availableForSale" | "quantityAvailable"
 >[] = [
   {
     sku: "YC-CAB-05",
@@ -225,6 +226,7 @@ export const catalog: CatalogItem[] = mockCatalog.map((item) => ({
   handle: item.sku.toLowerCase(),
   variantId: null,
   availableForSale: true,
+  quantityAvailable: null,
 }));
 
 export const categories = [

@@ -6,11 +6,17 @@ import { useCart } from "@/components/cart/cart-provider";
 export function AddToCart({
   variantId,
   availableForSale,
+  quantityAvailable,
 }: {
   variantId: string | null;
   availableForSale: boolean;
+  quantityAvailable: number | null;
 }) {
   const { addItem } = useCart();
+  const maxQuantity =
+    quantityAvailable != null && quantityAvailable > 0
+      ? Math.min(50, quantityAvailable)
+      : 50;
   const [quantity, setQuantity] = useState(1);
   const [pending, startTransition] = useTransition();
   const [message, setMessage] = useState<string | null>(null);
@@ -33,7 +39,7 @@ export function AddToCart({
         </p>
         <a
           href="/importaciones"
-          className="stamp mt-5 inline-flex h-11 items-center border border-amber bg-amber px-5 text-[12px] text-oil hover:bg-cream"
+          className="stamp mt-5 inline-flex h-11 items-center border border-rust bg-rust px-5 text-[12px] text-paper hover:bg-paper hover:text-ink"
         >
           Cotizar una igual
         </a>
@@ -45,7 +51,7 @@ export function AddToCart({
     if (!variantId) return;
     setMessage(null);
     startTransition(() => {
-      void addItem(variantId, quantity).then((ok) => {
+      void addItem(variantId, Math.min(quantity, maxQuantity)).then((ok) => {
         if (ok) setMessage("Agregada al carrito.");
       });
     });
@@ -58,18 +64,18 @@ export function AddToCart({
           <button
             type="button"
             onClick={() => setQuantity((value) => Math.max(1, value - 1))}
-            className="stamp px-3 py-3 text-[12px] text-cream hover:text-amber"
+            className="stamp px-3 py-3 text-[12px] text-cream hover:text-rust"
             aria-label="Quitar una"
           >
             −
           </button>
-          <span className="stamp min-w-10 py-3 text-center text-[12px] text-amber">
+          <span className="stamp min-w-10 py-3 text-center text-[12px] text-rust">
             {quantity}
           </span>
           <button
             type="button"
-            onClick={() => setQuantity((value) => Math.min(50, value + 1))}
-            className="stamp px-3 py-3 text-[12px] text-cream hover:text-amber"
+            onClick={() => setQuantity((value) => Math.min(maxQuantity, value + 1))}
+            className="stamp px-3 py-3 text-[12px] text-cream hover:text-rust"
             aria-label="Agregar una"
           >
             +
@@ -79,12 +85,12 @@ export function AddToCart({
           type="button"
           onClick={submit}
           disabled={pending}
-          className="stamp border border-amber bg-amber px-6 py-3 text-[12px] text-oil hover:bg-cream disabled:opacity-50"
+          className="stamp border border-rust bg-rust px-6 py-3 text-[12px] text-paper hover:bg-paper hover:text-ink disabled:opacity-50"
         >
           {pending ? "Agregando…" : "Agregar al carrito"}
         </button>
       </div>
-      {message ? <p className="text-sm text-amber">{message}</p> : null}
+      {message ? <p className="text-sm text-rust">{message}</p> : null}
     </div>
   );
 }

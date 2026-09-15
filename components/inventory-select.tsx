@@ -70,7 +70,7 @@ export function InventorySelect({
         aria-controls={listId}
         aria-label={`${label}: ${selected?.label ?? ""}`}
         onClick={() => setOpen((current) => !current)}
-        className={`inline-flex h-11 cursor-pointer items-center gap-2 border border-line bg-panel px-3 text-cream hover:border-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber ${
+        className={`inline-flex h-11 cursor-pointer items-center gap-2 border border-line bg-panel px-3 text-cream hover:border-rust focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rust ${
           fullWidth ? "w-full justify-between" : ""
         }`}
       >
@@ -83,7 +83,7 @@ export function InventorySelect({
         <svg
           aria-hidden
           viewBox="0 0 16 16"
-          className={`size-3.5 shrink-0 text-amber transition-transform ${open ? "rotate-180" : ""}`}
+          className={`size-3.5 shrink-0 text-rust transition-transform ${open ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
@@ -115,13 +115,13 @@ export function InventorySelect({
                     onChange(option.value);
                     setOpen(false);
                   }}
-                  className={`flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 px-3 text-left text-sm hover:bg-asphalt hover:text-amber focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-amber ${
-                    active ? "text-amber" : "text-cream"
+                  className={`flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 px-3 text-left text-sm hover:bg-asphalt hover:text-rust focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-rust ${
+                    active ? "text-rust" : "text-cream"
                   }`}
                 >
                   {option.label}
                   {active ? (
-                    <span aria-hidden className="size-1.5 rounded-full bg-amber" />
+                    <span aria-hidden className="size-1.5 rounded-full bg-rust" />
                   ) : null}
                 </button>
               </li>

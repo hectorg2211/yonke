@@ -1,22 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --oil: #101319;
-  --asphalt: #151a21;
-  --panel: #1a1f27;
-  --rust: #3e7cb1;
-  --oxide: #264a68;
-  --amber: #c8a24e;
-  --cream: #e9ebee;
-  --steel: #98a0ab;
-  --paper: #ede8df;
-  --line: color-mix(in srgb, var(--cream) 16%, transparent);
+  --oil: #f3efe6;
+  --asphalt: #e8e1d4;
+  --panel: #fffcf7;
+  --ink: #16181d;
+  --rust: #2f6494;
+  --oxide: #d7e4f0;
+  --amber: #a67c28;
+  --cream: #16181d;
+  --steel: #5c6570;
+  --paper: #fffaf3;
+  --line: color-mix(in srgb, var(--ink) 14%, transparent);
 }
 
 @theme inline {
   --color-oil: var(--oil);
   --color-asphalt: var(--asphalt);
   --color-panel: var(--panel);
+  --color-ink: var(--ink);
   --color-rust: var(--rust);
   --color-oxide: var(--oxide);
   --color-amber: var(--amber);
@@ -32,16 +34,16 @@
 html {
   scroll-behavior: smooth;
   background: var(--oil);
-  color-scheme: dark;
+  color-scheme: light;
   overscroll-behavior-y: none;
   overflow-x: clip;
   scrollbar-width: thin;
-  scrollbar-color: var(--amber) var(--oil);
+  scrollbar-color: var(--rust) var(--oil);
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--amber) var(--oil);
+  scrollbar-color: var(--rust) var(--oil);
 }
 
 ::-webkit-scrollbar,
@@ -57,13 +59,13 @@ html {
 
 ::-webkit-scrollbar-thumb,
 *::-webkit-scrollbar-thumb {
-  background: var(--amber);
+  background: var(--rust);
   border: 2px solid var(--oil);
 }
 
 ::-webkit-scrollbar-thumb:hover,
 *::-webkit-scrollbar-thumb:hover {
-  background: var(--rust);
+  background: color-mix(in srgb, var(--rust) 78%, var(--ink));
 }
 
 ::-webkit-scrollbar-corner,
@@ -132,7 +134,7 @@ a.whatsapp-fab:active {
 
 ::selection {
   background: var(--amber);
-  color: var(--oil);
+  color: var(--paper);
 }
 
 .grain {
@@ -145,17 +147,17 @@ a.whatsapp-fab:active {
   position: fixed;
   inset: 0;
   z-index: 80;
-  opacity: 0.09;
+  opacity: 0.045;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .hazard {
   background: repeating-linear-gradient(
     -45deg,
-    var(--amber),
-    var(--amber) 8px,
-    var(--oil) 8px,
-    var(--oil) 16px
+    var(--rust),
+    var(--rust) 8px,
+    var(--ink) 8px,
+    var(--ink) 16px
   );
 }
 
@@ -201,8 +203,7 @@ input[type="search"]::-webkit-search-results-button {
 
 .yard-map-embed {
   border: 0;
-  filter: invert(88%) hue-rotate(188deg) saturate(1.55) brightness(0.78)
-    contrast(1.12);
+  filter: grayscale(0.25) saturate(0.9) contrast(1.04);
 }
 
 @media (prefers-reduced-motion: reduce) {

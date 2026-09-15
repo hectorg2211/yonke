@@ -45,7 +45,7 @@ export function CartDrawer() {
         tabIndex={open ? 0 : -1}
         aria-label="Cerrar carrito"
         onClick={closeCart}
-        className={`fixed inset-0 z-110 bg-oil/70 transition-opacity ${
+        className={`fixed inset-0 z-110 bg-ink/45 transition-opacity ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
@@ -55,7 +55,7 @@ export function CartDrawer() {
         aria-modal="true"
         aria-labelledby="cart-title"
         aria-hidden={!open}
-        className={`fixed inset-y-0 right-0 z-120 flex w-full max-w-md flex-col border-l border-line bg-oil transition-transform duration-300 ${
+        className={`fixed inset-y-0 right-0 z-120 flex w-full max-w-md flex-col border-l border-line bg-paper transition-transform duration-300 ${
           open ? "translate-x-0" : "pointer-events-none translate-x-[calc(100%+1px)]"
         }`}
       >
@@ -75,14 +75,14 @@ export function CartDrawer() {
             ref={closeRef}
             type="button"
             onClick={closeCart}
-            className="stamp border border-line px-3 py-2 text-[10px] text-cream hover:border-amber hover:text-amber"
+            className="stamp border border-line px-3 py-2 text-[10px] text-cream hover:border-rust hover:text-rust"
           >
             Cerrar
           </button>
         </div>
 
         {error ? (
-          <p className="border-b border-rust/40 bg-oxide/20 px-5 py-3 text-sm text-amber">
+          <p className="border-b border-rust/40 bg-oxide px-5 py-3 text-sm text-ink">
             {error}
           </p>
         ) : null}
@@ -90,7 +90,7 @@ export function CartDrawer() {
         <div className="flex-1 overflow-y-auto px-5 py-5">
           {empty ? (
             <div className="border border-line bg-asphalt px-5 py-8">
-              <p className="stamp text-[10px] text-amber">Patio</p>
+              <p className="stamp text-[10px] text-rust">Patio</p>
               <p className="mt-3 text-cream">El carrito está vacío.</p>
               <p className="mt-2 text-sm text-steel">
                 Agrega una pieza desde el inventario.
@@ -98,7 +98,7 @@ export function CartDrawer() {
               <Link
                 href="/inventario"
                 onClick={closeCart}
-                className="stamp mt-6 inline-block border border-line px-4 py-2 text-[11px] text-cream hover:border-amber hover:text-amber"
+                className="stamp mt-6 inline-block border border-line px-4 py-2 text-[11px] text-cream hover:border-rust hover:text-rust"
               >
                 Ver inventario
               </Link>
@@ -126,7 +126,7 @@ export function CartDrawer() {
                     <Link
                       href={productPath(line.handle)}
                       onClick={closeCart}
-                      className="display block truncate text-3xl text-cream hover:text-amber"
+                      className="display block truncate text-3xl text-cream hover:text-rust"
                     >
                       {line.title}
                     </Link>
@@ -140,19 +140,19 @@ export function CartDrawer() {
                           type="button"
                           disabled={pending}
                           onClick={() => void setLineQuantity(line.id, line.quantity - 1)}
-                          className="stamp px-2 py-1 text-[11px] text-cream hover:text-amber disabled:opacity-40"
+                          className="stamp px-2 py-1 text-[11px] text-cream hover:text-rust disabled:opacity-40"
                           aria-label="Quitar una"
                         >
                           −
                         </button>
-                        <span className="stamp min-w-8 px-1 text-center text-[11px] text-amber">
+                        <span className="stamp min-w-8 px-1 text-center text-[11px] text-rust">
                           {line.quantity}
                         </span>
                         <button
                           type="button"
                           disabled={pending}
                           onClick={() => void setLineQuantity(line.id, line.quantity + 1)}
-                          className="stamp px-2 py-1 text-[11px] text-cream hover:text-amber disabled:opacity-40"
+                          className="stamp px-2 py-1 text-[11px] text-cream hover:text-rust disabled:opacity-40"
                           aria-label="Agregar una"
                         >
                           +
@@ -162,7 +162,7 @@ export function CartDrawer() {
                         type="button"
                         disabled={pending}
                         onClick={() => void removeLine(line.id)}
-                        className="stamp text-[10px] text-steel underline decoration-rust underline-offset-4 hover:text-amber disabled:opacity-40"
+                        className="stamp text-[10px] text-steel underline decoration-rust underline-offset-4 hover:text-rust disabled:opacity-40"
                       >
                         Quitar
                       </button>
@@ -191,7 +191,7 @@ export function CartDrawer() {
           ) : (
             <a
               href={cart.checkoutUrl}
-              className="stamp mt-4 flex items-center justify-center border border-amber bg-amber px-4 py-3 text-[12px] text-oil hover:bg-cream"
+              className="stamp mt-4 flex items-center justify-center border border-rust bg-rust px-4 py-3 text-[12px] text-paper hover:bg-paper hover:text-ink"
             >
               Ir a pagar
             </a>

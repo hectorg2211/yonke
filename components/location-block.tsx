@@ -19,7 +19,7 @@ export function LocationBlock() {
       <div className="mx-auto grid max-w-7xl gap-0 md:grid-cols-12">
         <div className="flex flex-col justify-between gap-10 px-5 py-16 md:col-span-5 md:px-8 md:py-20">
           <div>
-            <p className="stamp text-[11px] text-amber">Cómo llegar</p>
+            <p className="stamp text-[11px] text-rust">Cómo llegar</p>
             <h2 className="display mt-4 text-7xl md:text-8xl">El patio</h2>
             <p className="mt-6 max-w-sm text-steel">
               Tres puntos en Mesa de Otay, a un lado de la garita. Aquí se
@@ -46,17 +46,17 @@ export function LocationBlock() {
                     aria-pressed={selected}
                     className={`flex w-full items-center justify-between gap-4 border px-4 py-3 text-left ${
                       selected
-                        ? "border-amber bg-panel"
-                        : "border-line hover:border-amber"
+                        ? "border-rust bg-panel"
+                        : "border-line hover:border-rust"
                     }`}
                   >
                     <span>
-                      <span className="stamp block text-[10px] text-amber">
+                      <span className="stamp block text-[10px] text-rust">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <span className="mt-1 block text-cream">{item.label}</span>
                     </span>
-                    <span className="stamp shrink-0 text-[10px] text-amber">
+                    <span className="stamp shrink-0 text-[10px] text-rust">
                       {selected ? "En mapa" : "Ver mapa"}
                     </span>
                   </button>
@@ -68,7 +68,7 @@ export function LocationBlock() {
                 href={mapsPinUrl(active.lat, active.lng)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="stamp border border-amber bg-amber px-5 py-3 text-[11px] text-oil hover:bg-cream"
+                className="stamp border border-rust bg-rust px-5 py-3 text-[11px] text-paper hover:bg-paper hover:text-ink"
               >
                 Abrir en Maps
               </a>
@@ -76,7 +76,7 @@ export function LocationBlock() {
                 href={mapsDirectionsUrl(active.lat, active.lng)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="stamp border border-line px-5 py-3 text-[11px] text-cream hover:border-amber hover:text-amber"
+                className="stamp border border-line px-5 py-3 text-[11px] text-cream hover:border-rust hover:text-rust"
               >
                 Cómo llegar
               </a>

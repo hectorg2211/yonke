@@ -13,12 +13,12 @@ import {
 } from "@/lib/inventory";
 
 const chipClass =
-  "stamp inline-flex h-11 shrink-0 cursor-pointer items-center border px-3 text-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber";
+  "stamp inline-flex h-11 shrink-0 cursor-pointer items-center border px-3 text-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rust";
 
 function chipTone(active: boolean) {
   return active
-    ? "border-amber bg-amber text-oil"
-    : "border-line bg-panel text-steel hover:border-amber hover:text-amber";
+    ? "border-rust bg-rust text-paper"
+    : "border-line bg-panel text-steel hover:border-rust hover:text-rust";
 }
 
 export function InventoryToolbar({
@@ -102,7 +102,7 @@ export function InventoryToolbar({
           placeholder="Buscar por SKU, cabina, motor…"
           autoComplete="off"
           enterKeyHint="search"
-          className="h-11 w-full border border-line bg-panel pr-11 pl-11 text-base text-cream placeholder:text-steel focus-visible:border-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
+          className="h-11 w-full border border-line bg-panel pr-11 pl-11 text-base text-cream placeholder:text-steel focus-visible:border-rust focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rust"
         />
         {draft ? (
           <button
@@ -111,7 +111,7 @@ export function InventoryToolbar({
               setDraft("");
               navigate({ q: "" });
             }}
-            className="absolute top-1/2 right-1.5 grid size-8 -translate-y-1/2 cursor-pointer place-items-center text-steel hover:text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
+            className="absolute top-1/2 right-1.5 grid size-8 -translate-y-1/2 cursor-pointer place-items-center text-steel hover:text-rust focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rust"
             aria-label="Borrar búsqueda"
           >
             <svg aria-hidden viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -151,7 +151,7 @@ export function InventoryToolbar({
         {filtersOn ? (
           <Link
             href="/inventario"
-            className={`${chipClass} min-w-0 flex-1 justify-center border-line bg-panel text-steel hover:border-amber hover:text-amber`}
+            className={`${chipClass} min-w-0 flex-1 justify-center border-line bg-panel text-steel hover:border-rust hover:text-rust`}
           >
             Limpiar
           </Link>
@@ -183,7 +183,7 @@ export function InventoryToolbar({
           {filtersOn ? (
             <Link
               href="/inventario"
-              className={`${chipClass} border-line bg-transparent text-steel hover:border-amber hover:text-amber`}
+              className={`${chipClass} border-line bg-transparent text-steel hover:border-rust hover:text-rust`}
             >
               Limpiar
             </Link>

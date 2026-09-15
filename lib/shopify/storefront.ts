@@ -66,18 +66,14 @@ export async function storefrontFetch<T>(
     );
   }
 
-  if (payload.errors?.length) {
-    throw new Error(payload.errors.map((error) => error.message).join("; "));
-  }
-
-  if (!response.ok) {
+  if (!payload.data) {
     const graphqlMessage = payload.errors?.map((error) => error.message).join("; ");
-    const message =
+    throw new Error(
       graphqlMessage ||
-      (response.status === 401
-        ? "Token o dominio inválido (401)."
-        : `Storefront API ${response.status}`);
-    throw new Error(message);
+        (response.status === 401
+          ? "Token o dominio inválido (401)."
+          : `Storefront API ${response.status}`),
+    );
   }
 
   return payload;

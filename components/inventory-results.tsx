@@ -25,7 +25,7 @@ export function InventoryResults({
         {hasActiveFilters(query) ? (
           <Link
             href="/inventario"
-            className="stamp mt-6 inline-block border border-amber bg-amber px-5 py-2.5 text-[12px] text-oil hover:bg-cream"
+            className="stamp mt-6 inline-block border border-rust bg-rust px-5 py-2.5 text-[12px] text-paper hover:bg-paper hover:text-ink"
           >
             Ver todo el inventario
           </Link>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { AddToCart } from "@/components/cart/add-to-cart";
+import { LowStockNote } from "@/components/low-stock-note";
 import { getCatalog, getCatalogProduct, relatedCatalog } from "@/lib/catalog";
 
 export async function generateStaticParams() {
@@ -50,11 +51,11 @@ export default async function ProductPage({
   return (
     <div className="mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-16">
       <p className="stamp text-[11px] text-steel">
-        <Link href="/inventario" className="hover:text-amber">
+        <Link href="/inventario" className="hover:text-rust">
           Inventario
         </Link>
         <span className="mx-2 text-line">/</span>
-        <span className="text-amber">{item.sku}</span>
+        <span className="text-rust">{item.sku}</span>
       </p>
 
       <article className="mt-8 grid gap-8 lg:grid-cols-12 lg:gap-12">
@@ -68,29 +69,40 @@ export default async function ProductPage({
             className="object-cover grayscale"
           />
           <div className="absolute inset-0 bg-linear-to-t from-oil/70 via-transparent to-transparent" />
-          <span className="stamp absolute top-4 left-4 border border-amber bg-oil/80 px-3 py-1 text-[11px] text-amber">
+          <span className="stamp absolute top-4 left-4 border border-rust bg-rust px-3 py-1 text-[11px] text-paper">
             {item.sku}
           </span>
           {item.variantId && !item.availableForSale ? (
-            <span className="stamp absolute inset-x-0 bottom-0 bg-amber px-4 py-3 text-center text-[12px] text-oil">
+            <span className="stamp absolute inset-x-0 bottom-0 bg-amber px-4 py-3 text-center text-[12px] text-ink">
               Agotada · Sin existencia en patio
             </span>
-          ) : null}
+          ) : (
+            <LowStockNote
+              quantity={item.quantityAvailable}
+              available={item.availableForSale}
+              className="stamp absolute inset-x-0 bottom-0 bg-amber px-4 py-3 text-center text-[12px] text-ink"
+            />
+          )}
         </div>
 
         <div className="flex flex-col lg:col-span-5">
-          <p className="stamp text-[11px] text-amber">Pieza de tractocamión</p>
+          <p className="stamp text-[11px] text-rust">Pieza de tractocamión</p>
           <h1 className="display mt-3 text-7xl text-cream md:text-8xl">
             {item.name}
           </h1>
           <p className="mt-4 text-2xl text-amber">{item.price}</p>
+          <LowStockNote
+            quantity={item.quantityAvailable}
+            available={item.availableForSale}
+            className="stamp mt-2 inline-block border border-amber bg-amber px-2.5 py-1 text-[10px] text-ink"
+          />
           <p className="mt-5 leading-7 text-steel">{item.details}</p>
 
-          <dl className="mt-8 grid gap-px bg-line">
+          <dl className="mt-8 grid gap-px border border-line bg-line">
             {facts.map(([label, value]) => (
               <div
                 key={label}
-                className="grid grid-cols-[7.5rem_1fr] gap-4 bg-oil px-0 py-3 md:grid-cols-[8.5rem_1fr]"
+                className="grid grid-cols-[7.5rem_1fr] items-baseline gap-5 bg-panel px-4 py-4 md:grid-cols-[9rem_1fr] md:px-5 md:py-[1.125rem]"
               >
                 <dt className="stamp text-[10px] text-steel">{label}</dt>
                 <dd className="text-cream">{value}</dd>
@@ -102,6 +114,7 @@ export default async function ProductPage({
             <AddToCart
               variantId={item.variantId}
               availableForSale={item.availableForSale}
+              quantityAvailable={item.quantityAvailable}
             />
           </div>
         </div>
@@ -111,12 +124,12 @@ export default async function ProductPage({
         <section className="mt-20 border-t border-line pt-12">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="stamp text-[11px] text-amber">Más del patio</p>
+              <p className="stamp text-[11px] text-rust">Más del patio</p>
               <h2 className="display mt-2 text-6xl">Otras piezas</h2>
             </div>
             <Link
               href="/inventario"
-              className="stamp text-[11px] text-cream underline decoration-rust underline-offset-4 hover:text-amber"
+              className="stamp text-[11px] text-cream underline decoration-rust underline-offset-4 hover:text-rust"
             >
               Ver inventario
             </Link>

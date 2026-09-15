@@ -15,13 +15,19 @@ export default async function Home() {
           alt="Tractocamión en el patio"
           fill
           priority
-          className="object-cover object-center grayscale"
+          className="object-cover object-[22%_center] grayscale -scale-x-100"
         />
-        <div className="absolute inset-0 bg-oil/70" />
-        <div className="absolute inset-0 bg-linear-to-r from-oil via-oil/70 to-transparent" />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(to_right,var(--oil)_0%,var(--oil)_46%,color-mix(in_srgb,var(--oil)_80%,transparent)_58%,color-mix(in_srgb,var(--oil)_30%,transparent)_72%,transparent_88%)] md:bg-[linear-gradient(to_right,var(--oil)_0%,var(--oil)_36%,color-mix(in_srgb,var(--oil)_72%,transparent)_50%,color-mix(in_srgb,var(--oil)_22%,transparent)_66%,transparent_84%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-oil to-transparent md:h-28"
+        />
         <div className="relative mx-auto flex min-h-[34rem] w-full max-w-7xl flex-col justify-end gap-8 px-5 py-12 md:min-h-[88dvh] md:gap-10 md:px-8 md:py-24">
           <div className="max-w-4xl">
-            <p className="stamp max-w-sm text-[11px] leading-6 text-amber md:max-w-none">
+            <p className="stamp max-w-sm text-[11px] leading-6 text-rust md:max-w-none">
               {site.city} · Mesa de Otay · Envíos a toda la República
             </p>
             <h1 className="display mt-5 text-[clamp(3.75rem,13vw,7.5rem)] text-cream md:text-[9rem] lg:text-[11rem]">
@@ -38,13 +44,13 @@ export default async function Home() {
           <div className="flex flex-wrap gap-3">
             <Link
               href="/inventario"
-              className="stamp border border-amber bg-amber px-6 py-3 text-[12px] text-oil hover:bg-cream"
+              className="stamp border border-rust bg-rust px-6 py-3 text-[12px] text-paper hover:bg-paper hover:text-ink"
             >
               Ver inventario
             </Link>
             <Link
               href="/importaciones"
-              className="stamp border border-cream/30 px-6 py-3 text-[12px] text-cream hover:border-amber hover:text-amber"
+              className="stamp border border-line bg-paper px-6 py-3 text-[12px] text-cream hover:border-rust hover:text-rust"
             >
               Cotizar una pieza
             </Link>
@@ -60,7 +66,7 @@ export default async function Home() {
             ["03", "Cotizar", "Si no está en piso, se cotiza por año y tipo de pieza."],
           ].map(([code, title, copy]) => (
             <div key={code} className="flex gap-4">
-              <span className="stamp text-amber">{code}</span>
+              <span className="stamp text-rust">{code}</span>
               <div>
                 <h2 className="display text-4xl">{title}</h2>
                 <p className="mt-2 text-sm leading-6 text-steel">{copy}</p>
@@ -73,12 +79,12 @@ export default async function Home() {
       <section className="mx-auto max-w-7xl px-5 py-20 md:px-8">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="stamp text-[11px] text-amber">En el patio ahora</p>
+            <p className="stamp text-[11px] text-rust">En el patio ahora</p>
             <h2 className="display mt-3 text-7xl md:text-9xl">Inventario</h2>
           </div>
           <Link
             href="/inventario"
-            className="stamp text-[11px] text-cream underline decoration-rust underline-offset-4 hover:text-amber"
+            className="stamp text-[11px] text-cream underline decoration-rust underline-offset-4 hover:text-rust"
           >
             Abrir catálogo
           </Link>
@@ -93,7 +99,7 @@ export default async function Home() {
       <section className="bg-asphalt">
         <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:grid-cols-2 md:px-8">
           <div>
-            <p className="stamp text-[11px] text-amber">Lo que se vende</p>
+            <p className="stamp text-[11px] text-rust">Lo que se vende</p>
             <h2 className="display mt-3 text-7xl md:text-9xl">
               Solo
               <br />
@@ -105,15 +111,15 @@ export default async function Home() {
             </p>
             <Link
               href="/inventario"
-              className="stamp mt-8 inline-block border border-line px-5 py-3 text-[11px] text-cream hover:border-amber hover:text-amber"
+              className="stamp mt-8 inline-block border border-line px-5 py-3 text-[11px] text-cream hover:border-rust hover:text-rust"
             >
               Ver piezas
             </Link>
           </div>
           <ol className="grid gap-px bg-line">
             {partFamilies.map((family) => (
-              <li key={family.code} className="flex gap-5 bg-asphalt p-6">
-                <span className="stamp text-amber">{family.code}</span>
+              <li key={family.code} className="flex gap-5 bg-panel p-6">
+                <span className="stamp text-rust">{family.code}</span>
                 <div>
                   <h3 className="display text-5xl">{family.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-steel">{family.copy}</p>
@@ -131,9 +137,9 @@ export default async function Home() {
           fill
           className="object-cover grayscale"
         />
-        <div className="absolute inset-0 bg-oil/75" />
+        <div className="absolute inset-0 bg-oil/85" />
         <div className="relative mx-auto max-w-7xl px-5 py-24 md:px-8">
-          <p className="stamp text-[11px] text-amber">Cotización</p>
+          <p className="stamp text-[11px] text-rust">Cotización</p>
           <h2 className="display mt-4 max-w-3xl text-7xl md:text-9xl">
             Cabina, motor o pieza. El año decide el precio.
           </h2>
@@ -143,7 +149,7 @@ export default async function Home() {
           </p>
           <Link
             href="/importaciones"
-            className="stamp mt-8 inline-block border border-amber bg-amber px-6 py-3 text-[12px] text-oil hover:bg-cream"
+            className="stamp mt-8 inline-block border border-rust bg-rust px-6 py-3 text-[12px] text-paper hover:bg-paper hover:text-ink"
           >
             Cotizar pieza
           </Link>

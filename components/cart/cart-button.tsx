@@ -10,7 +10,7 @@ export function CartButton() {
     <button
       type="button"
       onClick={openCart}
-      className="relative grid size-11 place-items-center border border-line text-cream hover:border-amber hover:text-amber"
+      className="relative grid size-11 place-items-center border border-line text-cream hover:border-rust hover:text-rust"
       aria-label={
         count === 1
           ? "Abrir carrito, 1 pieza"
@@ -32,7 +32,7 @@ export function CartButton() {
         <circle cx="16.6" cy="18.4" r="1.35" fill="currentColor" stroke="none" />
       </svg>
       {count > 0 ? (
-        <span className="absolute -top-1.5 -right-1.5 grid min-w-5 place-items-center bg-amber px-1 text-[9px] font-medium text-oil">
+        <span className="absolute -top-1.5 -right-1.5 grid min-w-5 place-items-center bg-rust px-1 text-[9px] font-medium text-paper">
           {count}
         </span>
       ) : null}

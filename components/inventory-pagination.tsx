@@ -7,7 +7,7 @@ import {
 } from "@/lib/inventory";
 
 const controlClass =
-  "stamp grid min-h-11 min-w-11 place-items-center border px-3 text-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber";
+  "stamp grid min-h-11 min-w-11 place-items-center border px-3 text-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rust";
 
 export function InventoryPagination({
   query,
@@ -29,7 +29,7 @@ export function InventoryPagination({
       {previous ? (
         <Link
           href={`${inventoryHref(query, { pagina: previous })}#inventario-resultados`}
-          className={`${controlClass} border-line text-cream hover:border-amber hover:text-amber`}
+          className={`${controlClass} border-line text-cream hover:border-rust hover:text-rust`}
         >
           Anterior
         </Link>
@@ -53,8 +53,8 @@ export function InventoryPagination({
                 aria-current={item === page.pagina ? "page" : undefined}
                 className={`${controlClass} ${
                   item === page.pagina
-                    ? "border-amber bg-amber text-oil"
-                    : "border-line text-cream hover:border-amber hover:text-amber"
+                    ? "border-rust bg-rust text-paper"
+                    : "border-line text-cream hover:border-rust hover:text-rust"
                 }`}
               >
                 {item}
@@ -67,7 +67,7 @@ export function InventoryPagination({
       {next ? (
         <Link
           href={`${inventoryHref(query, { pagina: next })}#inventario-resultados`}
-          className={`${controlClass} border-line text-cream hover:border-amber hover:text-amber`}
+          className={`${controlClass} border-line text-cream hover:border-rust hover:text-rust`}
         >
           Siguiente
         </Link>
