@@ -201,6 +201,68 @@ input[type="search"]::-webkit-search-results-button {
   appearance: none;
 }
 
+.shop-policy {
+  color: var(--steel);
+}
+
+.shop-policy h2,
+.shop-policy h3 {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.shop-policy h2 {
+  margin-top: 2.5rem;
+  font-size: 1.75rem;
+}
+
+.shop-policy h3 {
+  margin-top: 1.75rem;
+  font-size: 1.35rem;
+}
+
+.shop-policy p {
+  margin-top: 1rem;
+  line-height: 1.75;
+}
+
+.shop-policy ul,
+.shop-policy ol {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.shop-policy li {
+  margin-top: 0.4rem;
+  line-height: 1.65;
+}
+
+.shop-policy a {
+  color: var(--rust);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.shop-policy a:hover {
+  color: var(--ink);
+}
+
+.shop-policy strong {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+.shop-policy .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
 .yard-map-embed {
   border: 0;
   filter: grayscale(0.25) saturate(0.9) contrast(1.04);
