@@ -49,7 +49,7 @@ export default async function Home() {
               Ver inventario
             </Link>
             <Link
-              href="/importaciones"
+              href="/cotizar"
               className="stamp border border-line bg-paper px-6 py-3 text-[12px] text-cream hover:border-rust hover:text-rust"
             >
               Cotizar una pieza
@@ -148,7 +148,7 @@ export default async function Home() {
             tractocamión. Sin mecánica: solo la pieza.
           </p>
           <Link
-            href="/importaciones"
+            href="/cotizar"
             className="stamp mt-8 inline-block border border-rust bg-rust px-6 py-3 text-[12px] text-paper hover:bg-paper hover:text-ink"
           >
             Cotizar pieza

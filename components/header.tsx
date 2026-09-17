@@ -41,7 +41,7 @@ export function Header({ account }: { account: HeaderAccount }) {
           </Link>
           <nav className='hidden items-center gap-6 md:flex lg:gap-8'>
             {nav
-              .filter(item => item.href !== '/importaciones')
+              .filter(item => item.href !== '/cotizar')
               .map(item => (
                 <Link
                   key={item.href}
@@ -58,7 +58,7 @@ export function Header({ account }: { account: HeaderAccount }) {
 
         <div className='hidden items-center gap-4 md:flex lg:gap-6'>
           <Link
-            href='/importaciones'
+            href='/cotizar'
             className='stamp inline-flex h-11 items-center border border-rust bg-rust px-4 text-[11px] text-paper transition-colors hover:bg-paper hover:text-ink'
           >
             Cotizar

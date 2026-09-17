@@ -38,7 +38,7 @@ export function AddToCart({
           Esta pieza ya no está en el patio. Cotiza una igual.
         </p>
         <a
-          href="/importaciones"
+          href="/cotizar"
           className="stamp mt-5 inline-flex h-11 items-center border border-rust bg-rust px-5 text-[12px] text-paper hover:bg-paper hover:text-ink"
         >
           Cotizar una igual

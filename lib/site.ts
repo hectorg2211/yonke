@@ -66,7 +66,8 @@ export const location = {
 export const nav = [
   { href: "/", label: "Patio" },
   { href: "/inventario", label: "Inventario" },
-  { href: "/importaciones", label: "Cotizar" },
+  { href: "/cotizar", label: "Cotizar" },
+  { href: "/importaciones", label: "Importar" },
   { href: "/#ubicacion", label: "Ubicación" },
 ] as const;
 
