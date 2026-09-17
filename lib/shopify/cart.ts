@@ -330,10 +330,14 @@ export async function removeCartLines(
 
 export function isMissingCartError(error: unknown): boolean {
   const message = error instanceof Error ? error.message.toLowerCase() : "";
+  if (!message) return false;
   return (
-    message.includes("does not exist") ||
-    message.includes("specified cart") ||
+    message.includes("specified cart does not exist") ||
+    message.includes("the specified cart") ||
+    message.includes("cart does not exist") ||
     message.includes("cart not found") ||
-    message.includes("invalid") && message.includes("cart")
+    message.includes("carrito especificado") ||
+    (message.includes("carrito") && message.includes("no existe")) ||
+    (message.includes("invalid") && message.includes("cart"))
   );
 }

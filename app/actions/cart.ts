@@ -119,6 +119,10 @@ export async function updateCartLine(
       ),
     };
   } catch (error) {
+    if (isMissingCartError(error)) {
+      await clearCartId();
+      return { ok: false, error: "El carrito ya no está activo. Agrega la pieza de nuevo." };
+    }
     return fail(error, "No se pudo actualizar el carrito.");
   }
 }
