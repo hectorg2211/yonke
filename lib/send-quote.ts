@@ -2,7 +2,10 @@
 
 import { whatsappUrl } from "@/lib/site";
 
-export async function sendQuoteToWhatsApp(lines: string[], files: File[]) {
+export async function sendQuoteToWhatsApp(
+  lines: Array<string | null>,
+  files: File[],
+) {
   const text = lines.filter((line): line is string => Boolean(line)).join("\n");
 
   if (files.length > 0 && typeof navigator.canShare === "function") {
