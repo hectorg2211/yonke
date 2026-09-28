@@ -4,7 +4,7 @@ export const site = {
   tagline: "Venta de partes para tractocamión",
   city: "Tijuana",
   phoneLabel: "WhatsApp del patio",
-  email: "yonke.elcunado@gmail.com",
+  email: "contacto@yonkeelcunado.com",
   whatsapp: "664 415 9482",
   whatsappE164: "526644159482",
 };

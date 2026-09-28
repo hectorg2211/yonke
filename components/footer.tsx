@@ -51,7 +51,12 @@ export function Footer() {
             <br />
             {location.city}, {location.state} {location.postal}
           </p>
-          <p className="mt-3 text-cream">{site.email}</p>
+          <a
+            href={`mailto:${site.email}`}
+            className="mt-3 block text-cream hover:text-rust"
+          >
+            {site.email}
+          </a>
           <a
             href={whatsappUrl()}
             target="_blank"
