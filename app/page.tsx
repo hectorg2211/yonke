@@ -108,7 +108,10 @@ export default async function Home() {
       </section>
 
       <section className="bg-asphalt">
-        <Reveal className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:grid-cols-2 md:px-8">
+        <Reveal
+          once
+          className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:grid-cols-2 md:px-8"
+        >
           <div>
             <p className="stamp motion-stamp text-[11px] text-rust">
               Lo que se vende
@@ -129,7 +132,7 @@ export default async function Home() {
               Ver piezas
             </Link>
           </div>
-          <ol className="stagger grid gap-px bg-line">
+          <ol className="grid gap-px bg-line">
             {partFamilies.map((family) => (
               <li key={family.code} className="flex gap-5 bg-panel p-6">
                 <span className="stamp text-rust">{family.code}</span>
