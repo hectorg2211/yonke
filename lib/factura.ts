@@ -3,8 +3,7 @@ import { whatsappUrl } from "@/lib/site";
 export const facturaCopyAfterPay =
   "¿Factura? Después de pagar, mándanos por WhatsApp tu Constancia de Situación Fiscal (PDF) y el número de pedido.";
 
-export const facturaCopyWhenYouPay =
-  "Cuando pagues, mándanos por WhatsApp tu Constancia de Situación Fiscal (PDF) para factura.";
+export const facturaCopyWhenYouPay = "Sí facturamos.";
 
 export function facturaWhatsAppMessage(orderName?: string) {
   if (orderName) {

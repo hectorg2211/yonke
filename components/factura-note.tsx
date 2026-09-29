@@ -14,6 +14,13 @@ export function FacturaNote({
   className?: string;
 }) {
   const copy = when === "when" ? facturaCopyWhenYouPay : facturaCopyAfterPay;
+  if (when === "when") {
+    return (
+      <p className={`text-sm leading-6 text-steel ${className}`.trim()}>
+        {copy}
+      </p>
+    );
+  }
   return (
     <p className={`text-sm leading-6 text-steel ${className}`.trim()}>
       {copy}{" "}
