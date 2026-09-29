@@ -25,7 +25,7 @@ export function QuoteChoices<T extends string>({
 }) {
   return (
     <div
-      className={`grid gap-2 ${columns === 3 ? "grid-cols-3" : "grid-cols-2"}`}
+      className={`stagger grid gap-2 ${columns === 3 ? "grid-cols-3" : "grid-cols-2"}`}
     >
       {options.map((option) => {
         const on = value === option.value;
@@ -51,8 +51,10 @@ export function QuoteChoices<T extends string>({
                 compact={columns === 3}
               />
             ) : null}
-            <span className="grid min-w-0 gap-1">
-              <span className="stamp text-[11px]">{option.label}</span>
+            <span className="grid min-w-0 flex-1 gap-0.5">
+              <span className="font-mono text-[10px] leading-snug font-medium tracking-[0.08em] uppercase sm:text-[11px]">
+                {option.label}
+              </span>
               {option.hint ? (
                 <span
                   className={`text-xs font-normal tracking-normal normal-case ${

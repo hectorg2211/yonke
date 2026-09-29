@@ -118,7 +118,7 @@ export function CartDrawer() {
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5">
           {empty ? (
             <div className="border border-line bg-asphalt px-5 py-8">
-              <p className="stamp text-[10px] text-rust">Patio</p>
+              <p className="stamp text-[10px] text-rust">Yonke</p>
               <p className="mt-3 text-cream">El carrito está vacío.</p>
               <p className="mt-2 text-sm text-steel">
                 Agrega una pieza desde el inventario.
@@ -132,7 +132,7 @@ export function CartDrawer() {
               </Link>
             </div>
           ) : (
-            <ul className="grid gap-4">
+            <ul className="stagger grid gap-4" key={open ? "open" : "closed"}>
               {lines.map((line) => (
                 <li key={line.id} className="grid grid-cols-[5rem_1fr] gap-3 border border-line bg-asphalt p-3">
                   <Link

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Reveal } from "@/components/reveal";
 import { isCustomerAccountConfigured } from "@/lib/shopify/env";
 import { location, nav, site, whatsappUrl } from "@/lib/site";
 
@@ -9,7 +10,10 @@ export function Footer() {
   return (
     <footer className="border-t border-line bg-asphalt">
       <div className="hazard h-2" aria-hidden="true" />
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-12 md:px-8">
+      <Reveal
+        once
+        className="stagger mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-12 md:px-8"
+      >
         <div className="md:col-span-5">
           <Image
             src="/assets/logo.png"
@@ -19,7 +23,7 @@ export function Footer() {
             className="h-32 w-auto max-w-80 object-contain object-left md:h-40 md:max-w-xl"
           />
           <p className="mt-5 max-w-sm text-steel">
-            Venta de partes para tractocamión. Inventario de patio y envíos a
+            Venta de partes para tractocamión. Inventario y envíos a
             toda la República. Sin taller.
           </p>
         </div>
@@ -43,7 +47,7 @@ export function Footer() {
           </ul>
         </div>
         <div className="md:col-span-4">
-          <p className="stamp text-[11px] text-steel">Patio</p>
+          <p className="stamp text-[11px] text-steel">Dirección</p>
           <p className="mt-4 text-cream">
             {location.street}
             <br />
@@ -74,7 +78,7 @@ export function Footer() {
             Ver en Google Maps
           </a>
         </div>
-      </div>
+      </Reveal>
       <div className="border-t border-line px-5 py-4 text-[12px] text-steel md:px-8">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2">
           <span className="stamp">{site.name}</span>

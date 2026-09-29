@@ -2,14 +2,16 @@
 
 import { useEffect, useId, useState } from "react";
 
-const MAX_FILES = 3;
-const MAX_BYTES = 8 * 1024 * 1024;
+import { quotePhotoLimits } from "@/lib/quotes";
+
+const MAX_FILES = quotePhotoLimits.maxFiles;
+const MAX_BYTES = quotePhotoLimits.maxBytes;
 
 export function QuotePhotos({
   files,
   onChange,
   variant = "compact",
-  hint = "Opcional. Una foto distingue piezas parecidas. Si WhatsApp no la manda sola, adjúntala en el chat.",
+  hint = "Opcional. Una foto ayuda a cotizar.",
 }: {
   files: File[];
   onChange: (files: File[]) => void;
@@ -72,7 +74,7 @@ export function QuotePhotos({
       <p className="text-sm text-steel">{hint}</p>
 
       {full ? null : (
-        <div className={`grid gap-2 ${variant === "hero" ? "" : "sm:grid-cols-2"}`}>
+        <div className={`stagger grid gap-2 ${variant === "hero" ? "" : "sm:grid-cols-2"}`}>
           <label
             htmlFor={cameraId}
             className="stamp grid min-h-24 cursor-pointer place-items-center border border-rust bg-rust text-[11px] text-paper hover:bg-paper hover:text-ink"
@@ -114,7 +116,7 @@ export function QuotePhotos({
       />
 
       {previews.length > 0 ? (
-        <ul className="grid grid-cols-3 gap-2">
+        <ul className="stagger grid grid-cols-3 gap-2">
           {previews.map((src, index) => {
             const file = files[index];
             if (!file) return null;

@@ -146,7 +146,7 @@ export function mapStorefrontProduct(product: StorefrontProductNode): CatalogIte
     image: product.featuredImage?.url ?? FALLBACK_IMAGE,
     imageAlt: product.featuredImage?.altText || product.title,
     condition: available ? "Disponible" : "Sin existencia",
-    origin: product.vendor || "Patio Otay",
+    origin: product.vendor || "Otay",
     stock:
       !available
         ? "Agotada"

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { AddToCart } from "@/components/cart/add-to-cart";
 import { LowStockNote } from "@/components/low-stock-note";
+import { Reveal } from "@/components/reveal";
 import { getCatalog, getCatalogProduct, relatedCatalog } from "@/lib/catalog";
 
 export async function generateStaticParams() {
@@ -50,7 +51,7 @@ export default async function ProductPage({
 
   return (
     <div className="mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-16">
-      <p className="stamp text-[11px] text-steel">
+      <p className="stamp motion-stamp text-[11px] text-steel">
         <Link href="/inventario" className="hover:text-rust">
           Inventario
         </Link>
@@ -74,7 +75,7 @@ export default async function ProductPage({
           </span>
           {item.variantId && !item.availableForSale ? (
             <span className="stamp absolute inset-x-0 bottom-0 bg-amber px-4 py-3 text-center text-[12px] text-ink">
-              Agotada · Sin existencia en patio
+              Agotada · Sin existencia
             </span>
           ) : (
             <LowStockNote
@@ -86,19 +87,25 @@ export default async function ProductPage({
         </div>
 
         <div className="flex flex-col lg:col-span-5">
-          <p className="stamp text-[11px] text-rust">Pieza de tractocamión</p>
-          <h1 className="display mt-3 text-7xl text-cream md:text-8xl">
+          <p className="stamp motion-stamp text-[11px] text-rust">
+            Pieza de tractocamión
+          </p>
+          <h1 className="display motion-settle mt-3 text-7xl text-cream md:text-8xl">
             {item.name}
           </h1>
-          <p className="mt-4 text-2xl text-amber">{item.price}</p>
+          <p className="motion-stamp motion-delay-2 mt-4 text-2xl text-amber">
+            {item.price}
+          </p>
           <LowStockNote
             quantity={item.quantityAvailable}
             available={item.availableForSale}
             className="stamp mt-2 inline-block border border-amber bg-amber px-2.5 py-1 text-[10px] text-ink"
           />
-          <p className="mt-5 leading-7 text-steel">{item.details}</p>
+          <p className="motion-stamp motion-delay-3 mt-5 leading-7 text-steel">
+            {item.details}
+          </p>
 
-          <dl className="mt-8 grid gap-px border border-line bg-line">
+          <dl className="stagger mt-8 grid gap-px border border-line bg-line">
             {facts.map(([label, value]) => (
               <div
                 key={label}
@@ -110,7 +117,7 @@ export default async function ProductPage({
             ))}
           </dl>
 
-          <div className="mt-8 flex flex-col gap-4">
+          <div className="motion-stamp motion-delay-4 mt-8 flex flex-col gap-4">
             <AddToCart
               variantId={item.variantId}
               availableForSale={item.availableForSale}
@@ -121,25 +128,29 @@ export default async function ProductPage({
       </article>
 
       {related.length > 0 ? (
-        <section className="mt-20 border-t border-line pt-12">
+        <Reveal className="mt-20 border-t border-line pt-12">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="stamp text-[11px] text-rust">Más del patio</p>
-              <h2 className="display mt-2 text-6xl">Otras piezas</h2>
+              <p className="stamp motion-stamp text-[11px] text-rust">
+                Más piezas
+              </p>
+              <h2 className="display motion-settle mt-2 text-6xl">
+                Otras piezas
+              </h2>
             </div>
             <Link
               href="/inventario"
-              className="stamp text-[11px] text-cream underline decoration-rust underline-offset-4 hover:text-rust"
+              className="stamp motion-stamp motion-delay-2 text-[11px] text-cream underline decoration-rust underline-offset-4 hover:text-rust"
             >
               Ver inventario
             </Link>
           </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="stagger-settle mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((entry) => (
               <ProductCard key={entry.handle} item={entry} />
             ))}
           </div>
-        </section>
+        </Reveal>
       ) : null}
     </div>
   );

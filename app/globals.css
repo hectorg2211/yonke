@@ -268,6 +268,219 @@ input[type="search"]::-webkit-search-results-button {
   filter: grayscale(0.25) saturate(0.9) contrast(1.04);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes yonke-stamp {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 28px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes yonke-settle {
+    from {
+      transform: translate3d(0, 18px, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes yonke-fab {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 10px, 0) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  .motion-stamp,
+  .motion-step {
+    animation: yonke-stamp 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .motion-settle {
+    animation: yonke-settle 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .motion-delay-1 {
+    animation-delay: 70ms;
+  }
+
+  .motion-delay-2 {
+    animation-delay: 140ms;
+  }
+
+  .motion-delay-3 {
+    animation-delay: 210ms;
+  }
+
+  .motion-delay-4 {
+    animation-delay: 280ms;
+  }
+
+  .stagger > *,
+  .stagger-late > * {
+    animation: yonke-stamp 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .stagger-settle > * {
+    animation: yonke-settle 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .stagger > *:nth-child(1),
+  .stagger-settle > *:nth-child(1) {
+    animation-delay: 0ms;
+  }
+
+  .stagger > *:nth-child(2),
+  .stagger-settle > *:nth-child(2) {
+    animation-delay: 80ms;
+  }
+
+  .stagger > *:nth-child(3),
+  .stagger-settle > *:nth-child(3) {
+    animation-delay: 160ms;
+  }
+
+  .stagger > *:nth-child(4),
+  .stagger-settle > *:nth-child(4) {
+    animation-delay: 240ms;
+  }
+
+  .stagger > *:nth-child(5),
+  .stagger-settle > *:nth-child(5) {
+    animation-delay: 320ms;
+  }
+
+  .stagger > *:nth-child(6),
+  .stagger-settle > *:nth-child(6) {
+    animation-delay: 400ms;
+  }
+
+  .stagger > *:nth-child(7),
+  .stagger-settle > *:nth-child(7) {
+    animation-delay: 480ms;
+  }
+
+  .stagger > *:nth-child(8),
+  .stagger-settle > *:nth-child(8) {
+    animation-delay: 560ms;
+  }
+
+  .stagger > *:nth-child(n + 9),
+  .stagger-settle > *:nth-child(n + 9) {
+    animation-delay: 600ms;
+  }
+
+  .stagger-late > *:nth-child(1) {
+    animation-delay: 180ms;
+  }
+
+  .stagger-late > *:nth-child(2) {
+    animation-delay: 260ms;
+  }
+
+  .stagger-late > *:nth-child(3) {
+    animation-delay: 340ms;
+  }
+
+  [data-reveal]:not([data-in]).stagger > *,
+  [data-reveal]:not([data-in]).stagger-late > *,
+  [data-reveal]:not([data-in]) .stagger > *,
+  [data-reveal]:not([data-in]) .stagger-late > *,
+  [data-reveal]:not([data-in]) .motion-stamp,
+  [data-reveal]:not([data-in]) .motion-step {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    animation: none;
+  }
+
+  [data-reveal]:not([data-in]).stagger-settle > *,
+  [data-reveal]:not([data-in]) .stagger-settle > *,
+  [data-reveal]:not([data-in]) .motion-settle {
+    transform: translate3d(0, 18px, 0);
+    animation: none;
+  }
+
+  @supports (animation-timeline: view()) {
+    [data-reveal][data-view] .motion-stamp,
+    [data-reveal][data-view] .motion-settle,
+    [data-reveal][data-view] .motion-step,
+    [data-reveal][data-view].stagger > *,
+    [data-reveal][data-view].stagger-late > *,
+    [data-reveal][data-view].stagger-settle > *,
+    [data-reveal][data-view] .stagger > *,
+    [data-reveal][data-view] .stagger-late > *,
+    [data-reveal][data-view] .stagger-settle > * {
+      animation-delay: 0ms;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-timeline: view();
+      animation-range: cover 10% cover 55%;
+    }
+
+    [data-reveal][data-view].stagger > *:nth-child(2),
+    [data-reveal][data-view] .stagger > *:nth-child(2),
+    [data-reveal][data-view].stagger-settle > *:nth-child(2),
+    [data-reveal][data-view] .stagger-settle > *:nth-child(2),
+    [data-reveal][data-view].stagger-late > *:nth-child(2),
+    [data-reveal][data-view] .stagger-late > *:nth-child(2) {
+      animation-range: cover 16% cover 60%;
+    }
+
+    [data-reveal][data-view].stagger > *:nth-child(3),
+    [data-reveal][data-view] .stagger > *:nth-child(3),
+    [data-reveal][data-view].stagger-settle > *:nth-child(3),
+    [data-reveal][data-view] .stagger-settle > *:nth-child(3),
+    [data-reveal][data-view].stagger-late > *:nth-child(3),
+    [data-reveal][data-view] .stagger-late > *:nth-child(3) {
+      animation-range: cover 22% cover 65%;
+    }
+
+    [data-reveal][data-view].stagger > *:nth-child(n + 4),
+    [data-reveal][data-view] .stagger > *:nth-child(n + 4),
+    [data-reveal][data-view].stagger-settle > *:nth-child(n + 4),
+    [data-reveal][data-view] .stagger-settle > *:nth-child(n + 4) {
+      animation-range: cover 28% cover 70%;
+    }
+  }
+
+  .whatsapp-fab-wrap {
+    animation: yonke-fab 520ms cubic-bezier(0.22, 1, 0.36, 1) 640ms both;
+  }
+}
+
+footer [data-reveal].stagger > *,
+footer [data-reveal][data-view].stagger > * {
+  animation-timeline: auto;
+  animation-range: normal;
+  animation-duration: 640ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (scripting: none) {
+  [data-reveal]:not([data-in]).stagger > *,
+  [data-reveal]:not([data-in]).stagger-late > *,
+  [data-reveal]:not([data-in]).stagger-settle > *,
+  [data-reveal]:not([data-in]) .stagger > *,
+  [data-reveal]:not([data-in]) .stagger-late > *,
+  [data-reveal]:not([data-in]) .stagger-settle > *,
+  [data-reveal]:not([data-in]) .motion-stamp,
+  [data-reveal]:not([data-in]) .motion-settle,
+  [data-reveal]:not([data-in]) .motion-step {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -291,6 +504,27 @@ input[type="search"]::-webkit-search-results-button {
 
   a.whatsapp-fab:hover,
   a.whatsapp-fab:active {
+    transform: none;
+  }
+
+  .motion-stamp,
+  .motion-settle,
+  .motion-step,
+  .stagger > *,
+  .stagger-late > *,
+  .stagger-settle > *,
+  .whatsapp-fab-wrap,
+  [data-reveal]:not([data-in]).stagger > *,
+  [data-reveal]:not([data-in]).stagger-late > *,
+  [data-reveal]:not([data-in]).stagger-settle > *,
+  [data-reveal]:not([data-in]) .stagger > *,
+  [data-reveal]:not([data-in]) .stagger-late > *,
+  [data-reveal]:not([data-in]) .stagger-settle > *,
+  [data-reveal]:not([data-in]) .motion-stamp,
+  [data-reveal]:not([data-in]) .motion-settle,
+  [data-reveal]:not([data-in]) .motion-step {
+    animation: none !important;
+    opacity: 1 !important;
     transform: none;
   }
 }

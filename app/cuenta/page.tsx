@@ -69,9 +69,11 @@ export default async function CuentaPage({
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-10 md:px-8 md:py-16">
-      <p className="stamp text-[11px] text-rust">Cliente</p>
-      <h1 className="display mt-3 text-7xl text-cream md:text-9xl">Cuenta</h1>
-      <p className="mt-4 max-w-xl text-steel">
+      <p className="stamp motion-stamp text-[11px] text-rust">Cliente</p>
+      <h1 className="display motion-settle mt-3 text-7xl text-cream md:text-9xl">
+        Cuenta
+      </h1>
+      <p className="motion-stamp motion-delay-2 mt-4 max-w-xl text-steel">
         Pedidos, datos de envío y sesión del cliente.
       </p>
 
@@ -88,17 +90,17 @@ export default async function CuentaPage({
       ) : null}
 
       {!configured ? (
-        <div className="mt-10 border border-line bg-asphalt px-5 py-8">
+        <div className="motion-stamp mt-10 border border-line bg-asphalt px-5 py-8">
           <p className="stamp text-[10px] text-rust">Cliente</p>
           <p className="mt-3 text-cream">La cuenta no está disponible.</p>
           <p className="mt-3 max-w-lg text-sm leading-6 text-steel">
-            Puedes seguir cotizando por WhatsApp o revisar el inventario.
+            Puedes seguir cotizando en la página o revisar el inventario.
           </p>
         </div>
       ) : null}
 
       {configured && !customer ? (
-        <div className="mt-10 border border-line bg-asphalt px-5 py-8">
+        <div className="motion-stamp mt-10 border border-line bg-asphalt px-5 py-8">
           <p className="stamp text-[10px] text-rust">Cliente</p>
           <p className="mt-3 text-cream">
             Entra con tu cuenta para ver pedidos y datos de envío.
@@ -113,7 +115,7 @@ export default async function CuentaPage({
       ) : null}
 
       {customer ? (
-        <div className="mt-10 grid gap-8">
+        <div className="stagger mt-10 grid gap-8">
           <section className="grid gap-6 border border-line bg-asphalt p-5 md:grid-cols-2">
             <div>
               <p className="stamp text-[10px] text-steel">Cliente</p>

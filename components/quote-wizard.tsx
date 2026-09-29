@@ -78,7 +78,7 @@ export function QuoteWizard({
           {steps.map((item, index) => (
             <div
               key={item.title}
-              className={`h-1 ${index <= step ? "bg-rust" : "bg-line"}`}
+              className={`h-1 transition-[background-color] duration-300 ${index <= step ? "bg-rust" : "bg-line"}`}
             />
           ))}
         </div>
@@ -86,17 +86,20 @@ export function QuoteWizard({
           {String(step + 1).padStart(2, "0")} /{" "}
           {String(steps.length).padStart(2, "0")}
         </p>
-        <h2
-          ref={headingRef}
-          tabIndex={-1}
-          className="display scroll-mt-24 text-3xl text-cream outline-none md:text-4xl"
-        >
-          {current.title}
-        </h2>
-        <p className="text-sm leading-6 text-steel">{current.hint}</p>
+        <div key={step} className="grid gap-6">
+          <h2
+            ref={headingRef}
+            tabIndex={-1}
+            className="display motion-stamp scroll-mt-24 text-3xl text-cream outline-none md:text-4xl"
+          >
+            {current.title}
+          </h2>
+          <p className="motion-stamp motion-delay-1 text-sm leading-6 text-steel">
+            {current.hint}
+          </p>
+          {children}
+        </div>
       </div>
-
-      {children}
 
       {error ? (
         <p className="text-sm text-rust" role="alert">
@@ -123,9 +126,9 @@ export function QuoteWizard({
           className="stamp ml-auto h-12 border border-rust bg-rust px-5 text-[12px] text-paper hover:bg-paper hover:text-ink disabled:opacity-50"
         >
           {pending
-            ? "Abriendo WhatsApp…"
+            ? "Enviando…"
             : last
-              ? "Pedir cotización"
+              ? "Enviar"
               : "Continuar"}
         </button>
       </div>

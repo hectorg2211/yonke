@@ -15,13 +15,13 @@ export function QuoteSwitcher({
   return (
     <div className="flex flex-wrap gap-2">
       <Link href="/cotizar" className={itemClass(active === "pieza")}>
-        Cotizar pieza
+        Pieza
       </Link>
       <Link
         href="/importaciones"
         className={itemClass(active === "importacion")}
       >
-        Cotizar importación
+        Importación
       </Link>
     </div>
   );

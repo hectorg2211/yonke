@@ -40,14 +40,18 @@ export default async function InventarioPage({
   return (
     <div className="mx-auto w-full min-w-0 max-w-7xl px-5 py-5 md:px-8 md:py-8">
       <div className="flex items-end justify-between gap-4">
-        <h1 className="display text-4xl text-cream md:text-5xl">Inventario</h1>
-        <p className="stamp pb-0.5 text-[11px] text-steel">
+        <h1 className="display motion-settle text-4xl text-cream md:text-5xl">
+          Inventario
+        </h1>
+        <p className="stamp motion-stamp motion-delay-2 pb-0.5 text-[11px] text-steel">
           {page.total}
           {page.truncated ? "+" : ""} pieza{page.total === 1 ? "" : "s"}
         </p>
       </div>
 
-      <InventoryToolbar query={query} families={families} />
+      <div className="motion-stamp motion-delay-2">
+        <InventoryToolbar query={query} families={families} />
+      </div>
 
       <InventoryResults query={query} page={page} />
     </div>

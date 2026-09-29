@@ -16,16 +16,18 @@ function WhatsappMark({ className }: { className?: string }) {
 
 export function WhatsappFab() {
   return (
-    <Link
-      href={whatsappUrl(
-        "Hola, busco una pieza para tractocamión. ¿Me pueden ayudar?",
-      )}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="whatsapp-fab fixed right-5 bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] z-[90] grid size-14 place-items-center rounded-full bg-[#25D366] text-white"
-      aria-label={`Abrir WhatsApp ${site.whatsapp}`}
-    >
-      <WhatsappMark className="size-8" />
-    </Link>
+    <div className="whatsapp-fab-wrap fixed right-5 bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] z-[90]">
+      <Link
+        href={whatsappUrl(
+          "Hola, busco una pieza para tractocamión. ¿Me pueden ayudar?",
+        )}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="whatsapp-fab grid size-14 place-items-center rounded-full bg-[#25D366] text-white"
+        aria-label={`Abrir WhatsApp ${site.whatsapp}`}
+      >
+        <WhatsappMark className="size-8" />
+      </Link>
+    </div>
   );
 }

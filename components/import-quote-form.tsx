@@ -3,43 +3,42 @@
 import { useState, type FormEvent } from "react";
 import type { QuoteArtId } from "@/components/quote-choice-art";
 import { QuoteChoices } from "@/components/quote-choices";
+import { QuoteHoneypot } from "@/components/quote-honeypot";
 import { QuotePhotos } from "@/components/quote-photos";
+import { QuoteSent } from "@/components/quote-sent";
 import { QuoteWizard } from "@/components/quote-wizard";
 import {
   cargoTypes,
   importModes,
-  presentationOptions,
   quoteAreaClass,
   quoteFieldClass,
   transportTypes,
 } from "@/lib/quotes";
-import { sendQuoteToWhatsApp } from "@/lib/send-quote";
+import { sendQuote } from "@/lib/send-quote";
 
 const steps = [
   {
-    title: "Mercancía",
-    hint: "Qué van a importar. El trámite cambia si es cabina, motor o camión.",
+    title: "Qué traes",
+    hint: "Cabina, motor o camión.",
   },
   {
     title: "Cómo viene",
-    hint: "Completo o cortado, y si hay que presentarla armada.",
+    hint: "Completo o cortado.",
   },
   {
-    title: "Transporte",
-    hint: "Cómo se mueve y, si ya los tienes, marca, modelo y año.",
+    title: "Cómo llega",
+    hint: "Transporte y, si los tienes, marca, modelo y año.",
   },
   {
     title: "Enviar",
-    hint: "El patio confirma el monto. La aduana puede mover el precio.",
+    hint: "Nombre y WhatsApp para contestarte.",
   },
 ] as const;
 
-const cargoHints: Record<(typeof cargoTypes)[number], string> = {
-  Cabina: "Caseta suelta",
-  Motor: "Motor a traer",
-  "Camión completo": "Unidad armada",
+const cargoHints: Partial<Record<(typeof cargoTypes)[number], string>> = {
+  "Camión completo": "Entero",
   "Camión por partes": "Cortado",
-  "Otra mercancía": "Otra carga",
+  "Otra mercancía": "Otra cosa",
 };
 
 const cargoArt: Record<(typeof cargoTypes)[number], QuoteArtId> = {
@@ -60,20 +59,8 @@ const modeOptions = [
   { value: "Completo" as const, label: "Completo", art: "camion" as const },
   {
     value: "Por partes (cortado)" as const,
-    label: "Por partes (cortado)",
+    label: "Cortado",
     art: "camion-cortado" as const,
-  },
-];
-const presentationChoiceOptions = [
-  {
-    value: "A presentar" as const,
-    label: "A presentar",
-    art: "presentar" as const,
-  },
-  {
-    value: "Sin presentar" as const,
-    label: "Sin presentar",
-    art: "sin-presentar" as const,
   },
 ];
 const transportOptions = [
@@ -91,8 +78,6 @@ export function ImportQuoteForm() {
   const [error, setError] = useState<string | null>(null);
   const [cargo, setCargo] = useState<(typeof cargoTypes)[number] | "">("");
   const [mode, setMode] = useState<(typeof importModes)[number] | "">("");
-  const [presentation, setPresentation] =
-    useState<(typeof presentationOptions)[number] | "">("");
   const [transport, setTransport] =
     useState<(typeof transportTypes)[number] | "">("");
   const [brand, setBrand] = useState("");
@@ -104,7 +89,10 @@ export function ImportQuoteForm() {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [photos, setPhotos] = useState<File[]>([]);
+  const [website, setWebsite] = useState("");
+  const [started] = useState(() => String(Date.now()));
   const [pending, setPending] = useState(false);
+  const [sent, setSent] = useState(false);
 
   function go(next: number) {
     setError(null);
@@ -116,8 +104,8 @@ export function ImportQuoteForm() {
       setError("Elige el tipo de mercancía.");
       return;
     }
-    if (step === 1 && (!mode || !presentation)) {
-      setError("Elige si va completo o cortado, y si se presenta.");
+    if (step === 1 && !mode) {
+      setError("Elige si va completo o cortado.");
       return;
     }
     if (step === 2 && !transport) {
@@ -129,7 +117,7 @@ export function ImportQuoteForm() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!cargo || !mode || !presentation || !transport) {
+    if (!cargo || !mode || !transport) {
       setError("Faltan datos de la importación.");
       return;
     }
@@ -139,27 +127,62 @@ export function ImportQuoteForm() {
     }
 
     setPending(true);
-    const lines = [
-      "Hola, quiero cotizar una importación.",
-      `Nombre: ${name.trim()}`,
-      `WhatsApp: ${phone.trim()}`,
-      email.trim() ? `Correo: ${email.trim()}` : null,
-      company.trim() ? `Empresa: ${company.trim()}` : null,
-      `Mercancía: ${cargo}`,
-      `Importación: ${mode}`,
-      `Presentación: ${presentation}`,
-      `Transporte: ${transport}`,
-      brand.trim() ? `Marca: ${brand.trim()}` : null,
-      model.trim() ? `Modelo: ${model.trim()}` : null,
-      year.trim() ? `Año: ${year.trim()}` : null,
-      note.trim() ? `Detalle: ${note.trim()}` : null,
-      photos.length ? `Fotos: ${photos.length} adjunta(s)` : null,
-    ];
     try {
-      await sendQuoteToWhatsApp(lines, photos);
+      const result = await sendQuote({
+        channel: "importacion",
+        fields: {
+          cargo,
+          mode,
+          transport,
+          brand,
+          model,
+          year,
+          note,
+          name,
+          phone,
+          email,
+          company,
+          website,
+          started,
+        },
+        files: photos,
+      });
+      if (!result.ok) {
+        setError(result.error);
+        return;
+      }
+      setSent(true);
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : "No se pudo enviar la cotización. Intenta de nuevo.",
+      );
     } finally {
       setPending(false);
     }
+  }
+
+  if (sent) {
+    return (
+      <QuoteSent
+        name={name}
+        phone={phone}
+        onAgain={() => {
+          setSent(false);
+          setStep(0);
+          setCargo("");
+          setMode("");
+          setTransport("");
+          setBrand("");
+          setModel("");
+          setYear("");
+          setNote("");
+          setPhotos([]);
+          setError(null);
+        }}
+      />
+    );
   }
 
   return (
@@ -175,9 +198,7 @@ export function ImportQuoteForm() {
     >
       {step === 0 ? (
         <fieldset className="grid gap-3">
-          <legend className="stamp text-[11px] text-steel">
-            Tipo de mercancía
-          </legend>
+          <legend className="stamp text-[11px] text-steel">Qué es</legend>
           <QuoteChoices
             name="cargo-type"
             value={cargo}
@@ -194,32 +215,14 @@ export function ImportQuoteForm() {
         <div className="grid gap-8">
           <fieldset className="grid gap-3">
             <legend className="stamp text-[11px] text-steel">
-              Completo o por partes
+              Completo o cortado
             </legend>
-            <p className="text-sm text-steel">
-              El trámite y el monto cambian si es cabina, camión cortado o
-              unidad completa.
-            </p>
             <QuoteChoices
               name="import-mode"
               value={mode}
               options={modeOptions}
               onChange={(value) => {
                 setMode(value);
-                setError(null);
-              }}
-            />
-          </fieldset>
-          <fieldset className="grid gap-3">
-            <legend className="stamp text-[11px] text-steel">
-              Presentación
-            </legend>
-            <QuoteChoices
-              name="presentation"
-              value={presentation}
-              options={presentationChoiceOptions}
-              onChange={(value) => {
-                setPresentation(value);
                 setError(null);
               }}
             />
@@ -242,7 +245,7 @@ export function ImportQuoteForm() {
               columns={3}
             />
           </fieldset>
-          <div className="grid gap-6 sm:grid-cols-3">
+          <div className="stagger grid gap-6 sm:grid-cols-3">
             <label className="grid gap-2">
               <span className="stamp text-[11px] text-steel">Marca</span>
               <input
@@ -281,14 +284,14 @@ export function ImportQuoteForm() {
               value={note}
               onChange={(event) => setNote(event.target.value)}
               rows={3}
-              placeholder="Cabina cortada, motor suelto, si va completo o por partes…"
+              placeholder="Algo que nos ayude a cotizar…"
               className={quoteAreaClass}
             />
           </label>
           <QuotePhotos
             files={photos}
             onChange={setPhotos}
-            hint="Opcional. Una foto evita cruzar cabina con camión completo."
+            hint="Opcional. Una foto ayuda a cotizar."
           />
         </div>
       ) : null}
@@ -302,9 +305,7 @@ export function ImportQuoteForm() {
             </div>
             <div className="flex justify-between gap-3">
               <dt className="text-steel">Modo</dt>
-              <dd className="text-right text-cream">
-                {[mode, presentation].filter(Boolean).join(" · ") || "—"}
-              </dd>
+              <dd className="text-right text-cream">{mode || "—"}</dd>
             </div>
             <div className="flex justify-between gap-3">
               <dt className="text-steel">Transporte</dt>
@@ -317,7 +318,7 @@ export function ImportQuoteForm() {
               </dd>
             </div>
           </dl>
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="stagger grid gap-6 sm:grid-cols-2">
             <label className="grid gap-2">
               <span className="stamp text-[11px] text-steel">Nombre</span>
               <input
@@ -341,7 +342,7 @@ export function ImportQuoteForm() {
               />
             </label>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="stagger grid gap-6 sm:grid-cols-2">
             <label className="grid gap-2">
               <span className="stamp text-[11px] text-steel">
                 Correo (opcional)
@@ -366,6 +367,7 @@ export function ImportQuoteForm() {
               />
             </label>
           </div>
+          <QuoteHoneypot value={website} onChange={setWebsite} />
         </div>
       ) : null}
     </QuoteWizard>

@@ -24,8 +24,8 @@ export default async function PrivacidadPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-5 py-10 md:px-8 md:py-16">
-      <p className="stamp text-[11px] text-rust">Legal</p>
-      <h1 className="display mt-3 text-7xl text-cream md:text-8xl">
+      <p className="stamp motion-stamp text-[11px] text-rust">Legal</p>
+      <h1 className="display motion-settle mt-3 text-7xl text-cream md:text-8xl">
         Aviso de privacidad
       </h1>
 
@@ -35,7 +35,7 @@ export default async function PrivacidadPage() {
         </p>
       ) : policy ? (
         <article
-          className="shop-policy mt-10"
+          className="shop-policy motion-stamp motion-delay-2 mt-10"
           dangerouslySetInnerHTML={{ __html: policy.html }}
         />
       ) : (

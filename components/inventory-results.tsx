@@ -14,7 +14,7 @@ export function InventoryResults({
     return (
       <div
         id="inventario-resultados"
-        className="mt-5 border border-line bg-panel px-6 py-12 text-center"
+        className="mt-5 border border-line bg-panel px-6 py-12 text-center motion-stamp"
       >
         <p className="display text-5xl text-cream">Sin coincidencias</p>
         <p className="mx-auto mt-3 max-w-md text-steel">
@@ -36,7 +36,7 @@ export function InventoryResults({
 
   return (
     <div id="inventario-resultados" className="mt-5 scroll-mt-24">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="stagger-settle grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {page.items.map((item) => (
             <ProductCard key={item.handle} item={item} compact />
         ))}

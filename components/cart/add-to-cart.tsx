@@ -24,7 +24,7 @@ export function AddToCart({
   if (!variantId) {
     return (
       <p className="text-sm text-steel">
-        Cotízala con el patio.
+        Cotízala con nosotros.
       </p>
     );
   }
@@ -35,7 +35,7 @@ export function AddToCart({
         <p className="stamp text-[11px] text-amber">Sin existencia</p>
         <p className="display mt-2 text-4xl text-cream md:text-5xl">Agotada</p>
         <p className="mt-3 text-sm leading-6 text-steel">
-          Esta pieza ya no está en el patio. Cotiza una igual.
+          Esta pieza ya no está en existencia. Cotiza una igual.
         </p>
         <a
           href="/cotizar"

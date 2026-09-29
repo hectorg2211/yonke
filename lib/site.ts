@@ -3,7 +3,7 @@ export const site = {
   shortName: "El Cuñado",
   tagline: "Venta de partes para tractocamión",
   city: "Tijuana",
-  phoneLabel: "WhatsApp del patio",
+  phoneLabel: "WhatsApp",
   email: "contacto@yonkeelcunado.com",
   whatsapp: "664 415 9482",
   whatsappE164: "526644159482",
@@ -64,7 +64,7 @@ export const location = {
 };
 
 export const nav = [
-  { href: "/", label: "Patio" },
+  { href: "/", label: "Inicio" },
   { href: "/inventario", label: "Inventario" },
   { href: "/cotizar", label: "Cotizar" },
   { href: "/importaciones", label: "Importar" },
@@ -127,13 +127,13 @@ const mockCatalog: Omit<
     note: "Pieza de tractocamión. Precio según año",
     image:
       "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1400&q=80",
-    imageAlt: "Tractocamión estacionado en patio",
-    condition: "Usada de patio",
-    origin: "Patio Otay",
+    imageAlt: "Tractocamión estacionado en Otay",
+    condition: "Usada",
+    origin: "Otay",
     stock: "En piso · a cotizar año",
     fit: "Tractocamión, según año de cabina",
     details:
-      "Cabina de tractocamión para cambio en patio. El precio parte de 1,500 USD y se ajusta con el año. No incluye instalación: solo la pieza.",
+      "Cabina de tractocamión para cambio. El precio parte de 1,500 USD y se ajusta con el año. No incluye instalación: solo la pieza.",
   },
   {
     sku: "YC-MTR-12",
@@ -141,12 +141,12 @@ const mockCatalog: Omit<
     category: "Motor",
     price: "A cotizar",
     priceAmount: null,
-    note: "De patio o por importación, según existencia",
+    note: "De aquí o por importación, según existencia",
     image:
       "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1400&q=80",
     imageAlt: "Motor de tractocamión",
     condition: "Usado / a traer",
-    origin: "Patio o importación",
+    origin: "Otay o importación",
     stock: "Según existencia",
     fit: "Diésel de tractocamión, año y modelo a confirmar",
     details:
@@ -162,8 +162,8 @@ const mockCatalog: Omit<
     image:
       "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1400&q=80",
     imageAlt: "Tractocamión visto de costado",
-    condition: "Usada de patio",
-    origin: "Patio Otay",
+    condition: "Usada",
+    origin: "Otay",
     stock: "Alta rotación",
     fit: "Lateral de tractocamión",
     details:
@@ -179,8 +179,8 @@ const mockCatalog: Omit<
     image:
       "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=1400&q=80",
     imageAlt: "Piezas y refacciones en el yonke",
-    condition: "Usada de patio",
-    origin: "Patio Otay",
+    condition: "Usada",
+    origin: "Otay",
     stock: "En piso",
     fit: "Iluminación de tractocamión",
     details:
@@ -195,13 +195,13 @@ const mockCatalog: Omit<
     note: "Caja para tractocamión, según año y modelo",
     image:
       "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=80",
-    imageAlt: "Patio industrial de refacciones",
+    imageAlt: "Yonke de refacciones",
     condition: "Usada / a cotizar",
-    origin: "Patio o importación",
+    origin: "Otay o importación",
     stock: "A confirmar",
     fit: "Caja de tractocamión, año y velocidad a confirmar",
     details:
-      "Transmisión para tractocamión. Hay que cruzar año y tipo de caja. Sin mecánica: se vende la pieza como sale del patio.",
+      "Transmisión para tractocamión. Hay que cruzar año y tipo de caja. Sin mecánica: se vende la pieza como sale de aquí.",
   },
   {
     sku: "YC-DIF-01",
@@ -212,9 +212,9 @@ const mockCatalog: Omit<
     note: "Pieza de tren motriz, no unidad completa",
     image:
       "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1400&q=80",
-    imageAlt: "Fila de tractocamiones en patio",
-    condition: "Usada de patio",
-    origin: "Patio Otay",
+    imageAlt: "Fila de tractocamiones en Otay",
+    condition: "Usada",
+    origin: "Otay",
     stock: "A cotizar",
     fit: "Tren motriz de tractocamión",
     details:

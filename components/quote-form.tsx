@@ -3,7 +3,9 @@
 import { useState, type FormEvent } from "react";
 import type { QuoteArtId } from "@/components/quote-choice-art";
 import { QuoteChoices } from "@/components/quote-choices";
+import { QuoteHoneypot } from "@/components/quote-honeypot";
 import { QuotePhotos } from "@/components/quote-photos";
+import { QuoteSent } from "@/components/quote-sent";
 import { QuoteWizard } from "@/components/quote-wizard";
 import {
   articleTypes,
@@ -13,24 +15,24 @@ import {
   quoteAreaClass,
   quoteFieldClass,
 } from "@/lib/quotes";
-import { sendQuoteToWhatsApp } from "@/lib/send-quote";
+import { sendQuote } from "@/lib/send-quote";
 
 const steps = [
   {
-    title: "Qué buscas",
-    hint: "Toca el tipo de pieza y si la quieren nueva o usada.",
+    title: "Qué pieza",
+    hint: "Elige el tipo y si la quieres nueva o usada.",
   },
   {
-    title: "Identificar",
-    hint: "Marca, modelo, año y serie. Si es eje, elige el subtipo.",
+    title: "Tu camión",
+    hint: "Marca, modelo y año. Si es eje, elige cuál.",
   },
   {
     title: "Foto",
-    hint: "Toma la pieza en el patio. No es obligatorio.",
+    hint: "Si tienes una, súbela. No es obligatoria.",
   },
   {
     title: "Enviar",
-    hint: "El patio arma el precio y te contesta por WhatsApp.",
+    hint: "Nombre y WhatsApp para contestarte.",
   },
 ] as const;
 
@@ -94,7 +96,10 @@ export function QuoteForm() {
   const [phone, setPhone] = useState("");
   const [company, setCompany] = useState("");
   const [photos, setPhotos] = useState<File[]>([]);
+  const [website, setWebsite] = useState("");
+  const [started] = useState(() => String(Date.now()));
   const [pending, setPending] = useState(false);
+  const [sent, setSent] = useState(false);
 
   const axleNeeded = needsAxleKind(kind);
 
@@ -128,26 +133,62 @@ export function QuoteForm() {
     }
 
     setPending(true);
-    const lines = [
-      "Hola, quiero cotizar una pieza.",
-      `Nombre: ${name.trim()}`,
-      `WhatsApp: ${phone.trim()}`,
-      company.trim() ? `Empresa: ${company.trim()}` : null,
-      `Tipo: ${kind}`,
-      axleNeeded && axle ? `Subtipo: ${axle}` : null,
-      brand.trim() ? `Marca: ${brand.trim()}` : null,
-      model.trim() ? `Modelo: ${model.trim()}` : null,
-      year.trim() ? `Año: ${year.trim()}` : null,
-      series.trim() ? `Serie: ${series.trim()}` : null,
-      `Condición: ${condition}`,
-      specs.trim() ? `Especificaciones: ${specs.trim()}` : null,
-      photos.length ? `Fotos: ${photos.length} adjunta(s)` : null,
-    ];
     try {
-      await sendQuoteToWhatsApp(lines, photos);
+      const result = await sendQuote({
+        channel: "pieza",
+        fields: {
+          article: kind,
+          condition,
+          axle,
+          brand,
+          model,
+          year,
+          series,
+          specs,
+          name,
+          phone,
+          company,
+          website,
+          started,
+        },
+        files: photos,
+      });
+      if (!result.ok) {
+        setError(result.error);
+        return;
+      }
+      setSent(true);
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : "No se pudo enviar la cotización. Intenta de nuevo.",
+      );
     } finally {
       setPending(false);
     }
+  }
+
+  if (sent) {
+    return (
+      <QuoteSent
+        name={name}
+        phone={phone}
+        onAgain={() => {
+          setSent(false);
+          setStep(0);
+          setKind("");
+          setAxle("");
+          setYear("");
+          setModel("");
+          setSeries("");
+          setBrand("");
+          setSpecs("");
+          setPhotos([]);
+          setError(null);
+        }}
+      />
+    );
   }
 
   return (
@@ -164,9 +205,9 @@ export function QuoteForm() {
       {step === 0 ? (
         <div className="grid gap-8">
           <fieldset className="grid gap-3">
-            <legend className="stamp text-[11px] text-steel">
-              Tipo de artículo
-            </legend>
+          <legend className="stamp text-[11px] text-steel">
+            Tipo de pieza
+          </legend>
             <QuoteChoices
               name="article-type"
               value={kind}
@@ -195,7 +236,7 @@ export function QuoteForm() {
 
       {step === 1 ? (
         <div className="grid gap-6">
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="stagger grid gap-6 sm:grid-cols-2">
             <label className="grid gap-2">
               <span className="stamp text-[11px] text-steel">Marca</span>
               <input
@@ -252,13 +293,13 @@ export function QuoteForm() {
               />
               <label className="grid gap-2">
                 <span className="stamp text-[11px] text-steel">
-                  Especificaciones
+                  Detalle (opcional)
                 </span>
                 <textarea
                   value={specs}
                   onChange={(event) => setSpecs(event.target.value)}
                   rows={4}
-                  placeholder="Medidas, lado, golpes, números de fundición."
+                  placeholder="Medidas, lado, golpes…"
                   className={quoteAreaClass}
                 />
               </label>
@@ -301,7 +342,7 @@ export function QuoteForm() {
               </dd>
             </div>
           </dl>
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="stagger grid gap-6 sm:grid-cols-2">
             <label className="grid gap-2">
               <span className="stamp text-[11px] text-steel">Nombre</span>
               <input
@@ -336,6 +377,7 @@ export function QuoteForm() {
               className={quoteFieldClass}
             />
           </label>
+          <QuoteHoneypot value={website} onChange={setWebsite} />
         </div>
       ) : null}
     </QuoteWizard>

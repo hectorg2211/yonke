@@ -21,8 +21,6 @@ export const quoteArtIds = [
   "camion",
   "camion-cortado",
   "carga",
-  "presentar",
-  "sin-presentar",
   "plataforma",
   "caja",
   "otro",
@@ -210,20 +208,6 @@ const art: Record<QuoteArtId, ReactNode> = {
       <path d="M16 18V12h16v6" />
     </Frame>
   ),
-  presentar: (
-    <Frame>
-      <path d="M14 34h20v4H14z" />
-      <path d="M16 34V16h8l8 6v12" />
-      <path d="M24 16v10h8" />
-    </Frame>
-  ),
-  "sin-presentar": (
-    <Frame>
-      <rect x="8" y="28" width="12" height="10" />
-      <rect x="28" y="14" width="12" height="10" />
-      <circle cx="34" cy="34" r="5" />
-    </Frame>
-  ),
   plataforma: (
     <Frame>
       <path d="M8 26h32v4H8z" />
@@ -260,7 +244,7 @@ export function QuoteChoiceArt({
   return (
     <span
       className={`grid shrink-0 place-items-center border ${
-        compact ? "size-10" : "size-12"
+        compact ? "size-9" : "size-10 sm:size-12"
       } ${selected ? "border-paper/35 bg-ink/20" : "border-line bg-asphalt"}`}
     >
       {art[id]}

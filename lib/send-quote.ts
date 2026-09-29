@@ -1,24 +1,23 @@
 "use client";
 
-import { whatsappUrl } from "@/lib/site";
+import { submitQuote } from "@/app/actions/quote";
+import { compressQuotePhotos } from "@/lib/compress-quote-photo";
 
-export async function sendQuoteToWhatsApp(
-  lines: Array<string | null>,
-  files: File[],
-) {
-  const text = lines.filter((line): line is string => Boolean(line)).join("\n");
+export type QuoteDraft = {
+  channel: "pieza" | "importacion";
+  fields: Record<string, string>;
+  files: File[];
+};
 
-  if (files.length > 0 && typeof navigator.canShare === "function") {
-    const payload = { text, files };
-    try {
-      if (navigator.canShare(payload)) {
-        await navigator.share(payload);
-        return;
-      }
-    } catch (error) {
-      if (error instanceof DOMException && error.name === "AbortError") return;
-    }
+export async function sendQuote(draft: QuoteDraft) {
+  const photos = await compressQuotePhotos(draft.files);
+  const form = new FormData();
+  form.set("channel", draft.channel);
+  for (const [key, value] of Object.entries(draft.fields)) {
+    form.set(key, value);
   }
-
-  window.open(whatsappUrl(text), "_blank", "noopener,noreferrer");
+  for (const photo of photos) {
+    form.append("photos", photo);
+  }
+  return submitQuote(form);
 }
