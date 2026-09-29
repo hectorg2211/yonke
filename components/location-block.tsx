@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Reveal } from "@/components/reveal";
+import { FacturaNote } from "@/components/factura-note";
 import {
   location,
   mapsDirectionsUrl,
@@ -19,32 +19,27 @@ export function LocationBlock() {
     <section id="ubicacion" className="scroll-mt-20 border-t border-line bg-asphalt">
       <div className="mx-auto grid max-w-7xl gap-0 md:grid-cols-12">
         <div className="flex flex-col justify-between gap-10 px-5 py-16 md:col-span-5 md:px-8 md:py-20">
-          <Reveal>
-            <p className="stamp motion-stamp text-[11px] text-rust">
-              Cómo llegar
-            </p>
-            <h2 className="display motion-settle mt-4 text-7xl md:text-8xl">
-              Otay
-            </h2>
-            <p className="motion-stamp motion-delay-2 mt-6 max-w-sm text-steel">
+          <div>
+            <p className="stamp text-[11px] text-rust">Cómo llegar</p>
+            <h2 className="display mt-4 text-7xl md:text-8xl">Otay</h2>
+            <p className="mt-6 max-w-sm text-steel">
               Tres puntos en Mesa de Otay, a un lado de la garita. Aquí se
               vende la pieza para el tractocamión; el envío sale a toda la
               República.
             </p>
-          </Reveal>
-          <Reveal>
-            <p className="stamp motion-stamp text-[11px] text-steel">
-              Dirección
-            </p>
-            <p className="display motion-settle mt-3 text-5xl text-cream">
+            <FacturaNote className="mt-5 max-w-sm" />
+          </div>
+          <div>
+            <p className="stamp text-[11px] text-steel">Dirección</p>
+            <p className="display mt-3 text-5xl text-cream">
               {location.street}
             </p>
-            <p className="motion-stamp motion-delay-2 mt-2 text-cream">
+            <p className="mt-2 text-cream">
               {location.neighborhood}
               <br />
               {location.city}, {location.state} {location.postal}
             </p>
-            <div className="stagger mt-8 grid gap-3">
+            <div className="mt-8 grid gap-3">
               {sites.map((item, index) => {
                 const selected = item.id === active.id;
                 return (
@@ -72,7 +67,7 @@ export function LocationBlock() {
                 );
               })}
             </div>
-            <div className="stagger-late mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={mapsPinUrl(active.lat, active.lng)}
                 target="_blank"
@@ -90,7 +85,7 @@ export function LocationBlock() {
                 Cómo llegar
               </a>
             </div>
-          </Reveal>
+          </div>
         </div>
         <div className="relative min-h-105 overflow-hidden border-t border-line bg-asphalt md:col-span-7 md:border-t-0 md:border-l">
           <iframe

@@ -1,3 +1,4 @@
+import { FacturaNote } from "@/components/factura-note";
 import { site } from "@/lib/site";
 
 export function QuoteSent({
@@ -22,6 +23,7 @@ export function QuoteSent({
       <p className="text-sm leading-6 text-steel">
         Si tarda, mándanos mensaje al {site.whatsapp}.
       </p>
+      <FacturaNote when="when" />
       <button
         type="button"
         onClick={onAgain}

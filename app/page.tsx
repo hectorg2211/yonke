@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FacturaNote } from "@/components/factura-note";
 import { LocationBlock } from "@/components/location-block";
 import { ProductCard } from "@/components/product-card";
 import { Reveal } from "@/components/reveal";
@@ -75,6 +76,9 @@ export default async function Home() {
             </div>
           ))}
         </Reveal>
+        <div className="mx-auto max-w-7xl border-t border-line px-5 py-6 md:px-8">
+          <FacturaNote className="max-w-2xl" />
+        </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-5 py-20 md:px-8">
@@ -149,7 +153,10 @@ export default async function Home() {
           className="object-cover grayscale"
         />
         <div className="absolute inset-0 bg-oil/85" />
-        <Reveal className="relative mx-auto max-w-7xl px-5 py-24 md:px-8">
+        <Reveal
+          once
+          className="relative mx-auto max-w-7xl px-5 py-24 md:px-8"
+        >
           <p className="stamp motion-stamp text-[11px] text-rust">Cotización</p>
           <h2 className="display motion-settle mt-4 max-w-3xl text-7xl md:text-9xl">
             Cabina, motor o pieza. El año decide el precio.

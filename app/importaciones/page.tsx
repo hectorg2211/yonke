@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FacturaNote } from "@/components/factura-note";
 import { ImportQuoteForm } from "@/components/import-quote-form";
 import { QuoteSwitcher } from "@/components/quote-switcher";
 
@@ -27,6 +28,10 @@ export default function ImportacionesPage() {
         <p className="motion-stamp motion-delay-4 mt-10 max-w-lg border-t border-line pt-8 text-sm leading-6 text-steel">
           Con marca, modelo y año cotizamos más rápido.
         </p>
+        <FacturaNote
+          when="when"
+          className="motion-stamp motion-delay-4 mt-4 max-w-lg"
+        />
       </div>
 
       <div className="border border-line bg-panel p-4 md:col-span-7 md:p-8">

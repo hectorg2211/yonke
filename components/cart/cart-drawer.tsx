@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useCart } from "@/components/cart/cart-provider";
+import { FacturaNote } from "@/components/factura-note";
 import { productPath } from "@/lib/site";
 
 export function CartDrawer() {
@@ -224,6 +225,7 @@ export function CartDrawer() {
               Ir a pagar
             </a>
           )}
+          <FacturaNote className="mt-3 text-[12px] leading-5" />
         </div>
       </aside>
     </>

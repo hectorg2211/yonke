@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { AddToCart } from "@/components/cart/add-to-cart";
+import { FacturaNote } from "@/components/factura-note";
 import { LowStockNote } from "@/components/low-stock-note";
 import { Reveal } from "@/components/reveal";
 import { getCatalog, getCatalogProduct, relatedCatalog } from "@/lib/catalog";
@@ -123,6 +124,7 @@ export default async function ProductPage({
               availableForSale={item.availableForSale}
               quantityAvailable={item.quantityAvailable}
             />
+            <FacturaNote />
           </div>
         </div>
       </article>

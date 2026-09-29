@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FacturaNote, FacturaOrderLink } from "@/components/factura-note";
 import { getCustomerAccount } from "@/lib/shopify/customer-account";
 import { isCustomerSignedIn } from "@/lib/shopify/customer-session";
 import { isCustomerAccountConfigured } from "@/lib/shopify/env";
@@ -105,6 +106,7 @@ export default async function CuentaPage({
           <p className="mt-3 text-cream">
             Entra con tu cuenta para ver pedidos y datos de envío.
           </p>
+          <FacturaNote className="mt-3 max-w-lg" />
           <a
             href="/api/auth/shopify/login?returnTo=/cuenta"
             className="stamp mt-6 inline-flex border border-rust bg-rust px-5 py-3 text-[12px] text-paper hover:bg-paper hover:text-ink"
@@ -157,6 +159,7 @@ export default async function CuentaPage({
               <div>
                 <p className="stamp text-[10px] text-rust">Historial</p>
                 <h2 className="display mt-2 text-5xl text-cream">Pedidos</h2>
+                <FacturaNote className="mt-3 max-w-lg" />
               </div>
               <Link
                 href="/inventario"
@@ -185,16 +188,19 @@ export default async function CuentaPage({
                         {label(FULFILLMENT, order.fulfillmentStatus)}
                       </p>
                     </div>
-                    <div className="flex items-center justify-between gap-4 md:justify-end">
+                    <div className="flex flex-wrap items-center justify-between gap-4 md:justify-end">
                       <p className="text-amber">{order.total}</p>
-                      {order.statusPageUrl ? (
-                        <a
-                          href={order.statusPageUrl}
-                          className="stamp text-[10px] text-cream underline decoration-rust underline-offset-4 hover:text-rust"
-                        >
-                          Ver pedido
-                        </a>
-                      ) : null}
+                      <div className="flex flex-wrap items-center gap-4">
+                        <FacturaOrderLink orderName={order.name} />
+                        {order.statusPageUrl ? (
+                          <a
+                            href={order.statusPageUrl}
+                            className="stamp text-[10px] text-cream underline decoration-rust underline-offset-4 hover:text-rust"
+                          >
+                            Ver pedido
+                          </a>
+                        ) : null}
+                      </div>
                     </div>
                   </li>
                 ))}

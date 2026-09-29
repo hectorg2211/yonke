@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FacturaNote } from "@/components/factura-note";
 import { InventoryToolbar } from "@/components/inventory-toolbar";
 import { InventoryResults } from "@/components/inventory-results";
 import { getCatalog, searchCatalog } from "@/lib/catalog";
@@ -48,6 +49,7 @@ export default async function InventarioPage({
           {page.truncated ? "+" : ""} pieza{page.total === 1 ? "" : "s"}
         </p>
       </div>
+      <FacturaNote className="mt-4 max-w-2xl" />
 
       <div className="motion-stamp motion-delay-2">
         <InventoryToolbar query={query} families={families} />

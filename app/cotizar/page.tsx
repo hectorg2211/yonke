@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FacturaNote } from "@/components/factura-note";
 import { QuoteForm } from "@/components/quote-form";
 import { QuoteSwitcher } from "@/components/quote-switcher";
 
@@ -27,6 +28,10 @@ export default function CotizarPage() {
         <p className="motion-stamp motion-delay-4 mt-10 max-w-lg border-t border-line pt-8 text-sm leading-6 text-steel">
           Vendemos partes de tractocamión. Sin taller.
         </p>
+        <FacturaNote
+          when="when"
+          className="motion-stamp motion-delay-4 mt-4 max-w-lg"
+        />
       </div>
 
       <div className="border border-line bg-panel p-4 md:col-span-7 md:p-8">

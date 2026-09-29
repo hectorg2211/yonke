@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import { isCustomerAccountConfigured } from "@/lib/shopify/env";
+import { FacturaNote } from "@/components/factura-note";
 import { location, nav, site, whatsappUrl } from "@/lib/site";
 
 export function Footer() {
@@ -69,6 +70,7 @@ export function Footer() {
           >
             WhatsApp {site.whatsapp}
           </a>
+          <FacturaNote className="mt-4 max-w-sm" />
           <a
             href={location.mapsUrl}
             target="_blank"

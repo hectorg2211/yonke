@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import type { QuoteArtId } from "@/components/quote-choice-art";
+import { FacturaNote } from "@/components/factura-note";
 import { QuoteChoices } from "@/components/quote-choices";
 import { QuoteHoneypot } from "@/components/quote-honeypot";
 import { QuotePhotos } from "@/components/quote-photos";
@@ -368,6 +369,7 @@ export function ImportQuoteForm() {
             </label>
           </div>
           <QuoteHoneypot value={website} onChange={setWebsite} />
+          <FacturaNote when="when" />
         </div>
       ) : null}
     </QuoteWizard>
