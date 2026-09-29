@@ -33,9 +33,9 @@ export default async function Home() {
               {site.city} · Mesa de Otay · Envíos a toda la República
             </p>
             <h1 className="display motion-settle mt-5 text-[clamp(3.75rem,13vw,7.5rem)] text-cream md:text-[9rem] lg:text-[11rem]">
-              Partes
+              Tracto
               <br />
-              de tracto
+              partes
             </h1>
             <p className="motion-stamp motion-delay-2 mt-6 max-w-xl text-lg leading-8 text-cream/80">
               Yonke de venta: cabinas, motores, focos, transmisiones y el resto
