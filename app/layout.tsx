@@ -9,6 +9,7 @@ import { loadCart } from "@/lib/shopify/load-cart";
 import { isCustomerSignedIn } from "@/lib/shopify/customer-session";
 import { isCustomerAccountConfigured } from "@/lib/shopify/env";
 import { site } from "@/lib/site";
+import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const display = Bebas_Neue({
@@ -38,6 +39,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl()),
   title: {
     default: `${site.name} · ${site.tagline}`,
     template: `%s · ${site.name}`,

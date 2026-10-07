@@ -8,6 +8,7 @@ import { isCustomerAccountConfigured } from "@/lib/shopify/env";
 export const metadata: Metadata = {
   title: "Cuenta",
   description: "Pedidos, dirección y sesión de cliente en Yonke El Cuñado.",
+  robots: { index: false, follow: false },
 };
 
 const ERRORS: Record<string, string> = {
