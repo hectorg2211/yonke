@@ -4,7 +4,9 @@ import { FacturaNote } from "@/components/factura-note";
 import { LocationBlock } from "@/components/location-block";
 import { ProductCard } from "@/components/product-card";
 import { Reveal } from "@/components/reveal";
+import { JsonLd } from "@/components/json-ld";
 import { getCatalog } from "@/lib/catalog";
+import { faqJsonLd, siteFaqs } from "@/lib/seo";
 import { partFamilies, site } from "@/lib/site";
 
 export default async function Home() {
@@ -174,6 +176,24 @@ export default async function Home() {
           >
             Cotizar pieza
           </Link>
+        </Reveal>
+      </section>
+
+      <section className="border-t border-line bg-panel">
+        <Reveal once className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
+          <JsonLd data={faqJsonLd()} />
+          <p className="stamp motion-stamp text-[11px] text-rust">Preguntas</p>
+          <h2 className="display motion-settle mt-3 scroll-mt-24 text-6xl md:text-8xl">
+            Lo que preguntan
+          </h2>
+          <dl className="stagger mt-10 grid gap-8 md:grid-cols-2">
+            {siteFaqs.map((item) => (
+              <div key={item.question} className="grid gap-2">
+                <dt className="text-lg text-cream">{item.question}</dt>
+                <dd className="text-sm leading-6 text-steel">{item.answer}</dd>
+              </div>
+            ))}
+          </dl>
         </Reveal>
       </section>
 

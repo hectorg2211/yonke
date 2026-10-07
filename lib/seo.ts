@@ -1,0 +1,209 @@
+import "server-only";
+
+import type { CatalogItem } from "@/lib/site";
+import { location, productPath, site, sites } from "@/lib/site";
+import { siteUrl } from "@/lib/site-url";
+
+export const siteDescription =
+  "Yonke El Cuñado en Garita de Otay, Tijuana: venta de partes para tractocamión. Catálogo y envíos a toda la República.";
+
+export const siteFaqs = [
+  {
+    question: "¿Qué venden?",
+    answer:
+      "Partes para tractocamión: cabinas, motores, transmisiones, focos y el resto de la refacción. No vendemos unidades completas.",
+  },
+  {
+    question: "¿Hacen taller o mecánica?",
+    answer:
+      "No. El yonke vende la pieza. El precio no incluye instalación.",
+  },
+  {
+    question: "¿Cómo se cotiza?",
+    answer:
+      "En la página de cotizar pieza o importación. El patio manda el precio por WhatsApp; no sale automático.",
+  },
+  {
+    question: "¿Facturan?",
+    answer:
+      "Sí. Después de pagar, manda por WhatsApp tu Constancia de Situación Fiscal (PDF) y el número de pedido.",
+  },
+  {
+    question: "¿Hacen envíos?",
+    answer:
+      "Sí. El cliente pide la pieza y se manda a toda la República.",
+  },
+] as const;
+
+export function clipText(text: string, max: number, fallback = "") {
+  const clean = text.replace(/\s+/gu, " ").trim();
+  if (!clean) return fallback;
+  if (clean.length <= max) return clean;
+  const slice = clean.slice(0, max);
+  const cut = slice.lastIndexOf(" ");
+  return `${(cut > max * 0.45 ? slice.slice(0, cut) : slice).trimEnd()}…`;
+}
+
+export function clipCatalogNote(text: string) {
+  const fallback = "Pieza de tractocamión";
+  const clean = text.replace(/\s+/gu, " ").trim();
+  if (!clean) return fallback;
+  const first = clean.match(/^[^.!?]+[.!?]/u)?.[0]?.trim();
+  const candidate = first && first.length <= 96 ? first : clean;
+  return clipText(candidate, 96, fallback);
+}
+
+function origin() {
+  return siteUrl();
+}
+
+export function localBusinessJsonLd() {
+  const url = origin();
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${url}/#sitio`,
+        name: site.name,
+        url,
+        inLanguage: "es-MX",
+        description: siteDescription,
+        publisher: { "@id": `${url}/#negocio` },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${url}/inventario?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
+      },
+      {
+        "@type": "AutoPartsStore",
+        "@id": `${url}/#negocio`,
+        name: site.name,
+        alternateName: site.shortName,
+        description: siteDescription,
+        url,
+        telephone: `+${site.whatsappE164}`,
+        email: site.email,
+        image: `${url}/assets/logo-long.png`,
+        logo: `${url}/assets/logo.png`,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: location.street,
+          addressLocality: location.city,
+          addressRegion: "BC",
+          postalCode: location.postal,
+          addressCountry: "MX",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: location.lat,
+          longitude: location.lng,
+        },
+        hasMap: location.mapsUrl,
+        areaServed: {
+          "@type": "Country",
+          name: "Mexico",
+        },
+        knowsAbout: [
+          "partes de tractocamión",
+          "cabinas",
+          "motores",
+          "transmisiones",
+          "importación de tractocamión",
+        ],
+        location: sites.map((yard) => ({
+          "@type": "Place",
+          name: yard.label,
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: yard.lat,
+            longitude: yard.lng,
+          },
+        })),
+      },
+    ],
+  };
+}
+
+export function faqJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: siteFaqs.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
+
+export function productJsonLd(item: CatalogItem) {
+  const url = `${origin()}${productPath(item.handle)}`;
+  const data: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: item.name,
+    sku: item.sku,
+    image: item.image,
+    description: clipText(item.details || item.note, 300, item.name),
+    category: item.category,
+    brand: {
+      "@type": "Brand",
+      name: site.name,
+    },
+    url,
+  };
+
+  if (item.priceAmount != null && item.priceCurrency) {
+    data.offers = {
+      "@type": "Offer",
+      url,
+      price: item.priceAmount,
+      priceCurrency: item.priceCurrency,
+      availability: item.availableForSale
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      seller: {
+        "@type": "AutoPartsStore",
+        name: site.name,
+      },
+    };
+  }
+
+  return data;
+}
+
+export function breadcrumbJsonLd(item: CatalogItem) {
+  const url = origin();
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Inicio",
+        item: url,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Inventario",
+        item: `${url}/inventario`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: item.name,
+        item: `${url}${productPath(item.handle)}`,
+      },
+    ],
+  };
+}

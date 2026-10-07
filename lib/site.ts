@@ -101,6 +101,7 @@ export type CatalogItem = {
   category: string;
   price: string;
   priceAmount: number | null;
+  priceCurrency: string | null;
   note: string;
   image: string;
   imageAlt: string;
@@ -124,6 +125,7 @@ const mockCatalog: Omit<
     category: "Cabina",
     price: "Desde 1,500 USD",
     priceAmount: 1500,
+    priceCurrency: "USD",
     note: "Pieza de tractocamión. Precio según año",
     image:
       "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1400&q=80",
@@ -141,6 +143,7 @@ const mockCatalog: Omit<
     category: "Motor",
     price: "A cotizar",
     priceAmount: null,
+    priceCurrency: null,
     note: "De aquí o por importación, según existencia",
     image:
       "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1400&q=80",
@@ -158,6 +161,7 @@ const mockCatalog: Omit<
     category: "Carrocería",
     price: "Consultar",
     priceAmount: null,
+    priceCurrency: null,
     note: "Pieza de movimiento diario",
     image:
       "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1400&q=80",
@@ -175,6 +179,7 @@ const mockCatalog: Omit<
     category: "Eléctrico",
     price: "Consultar",
     priceAmount: null,
+    priceCurrency: null,
     note: "Uno de los tipos de alta rotación",
     image:
       "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=1400&q=80",
@@ -192,6 +197,7 @@ const mockCatalog: Omit<
     category: "Tren",
     price: "A cotizar",
     priceAmount: null,
+    priceCurrency: null,
     note: "Caja para tractocamión, según año y modelo",
     image:
       "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=80",
@@ -209,6 +215,7 @@ const mockCatalog: Omit<
     category: "Tren",
     price: "A cotizar",
     priceAmount: null,
+    priceCurrency: null,
     note: "Pieza de tren motriz, no unidad completa",
     image:
       "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1400&q=80",

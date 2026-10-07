@@ -2,6 +2,7 @@ import "server-only";
 
 import { cache } from "react";
 import type { CatalogItem } from "@/lib/site";
+import { clipCatalogNote } from "@/lib/seo";
 import { formatMoney, type Money } from "@/lib/shopify/money";
 import { storefrontFetch } from "@/lib/shopify/storefront";
 import { isLowStock, lowStockMessage } from "@/lib/stock";
@@ -124,20 +125,6 @@ type ProductByHandleData = {
   product: StorefrontProductNode | null;
 };
 
-const CARD_NOTE_MAX = 96;
-
-function clipCatalogNote(text: string, fallback = "Pieza de tractocamión") {
-  const clean = text.replace(/\s+/gu, " ").trim();
-  if (!clean) return fallback;
-  const first = clean.match(/^[^.!?]+[.!?]/u)?.[0]?.trim();
-  const candidate =
-    first && first.length <= CARD_NOTE_MAX ? first : clean;
-  if (candidate.length <= CARD_NOTE_MAX) return candidate;
-  const slice = candidate.slice(0, CARD_NOTE_MAX);
-  const cut = slice.lastIndexOf(" ");
-  return `${(cut > 48 ? slice.slice(0, cut) : slice).trimEnd()}…`;
-}
-
 export function mapStorefrontProduct(product: StorefrontProductNode): CatalogItem {
   const variant = product.variants.nodes[0];
   const available = variant?.availableForSale ?? false;
@@ -156,6 +143,7 @@ export function mapStorefrontProduct(product: StorefrontProductNode): CatalogIte
     category: family,
     price: formatMoney(product.priceRange.minVariantPrice),
     priceAmount: Number.isFinite(amount) ? amount : null,
+    priceCurrency: product.priceRange.minVariantPrice.currencyCode,
     note: clipCatalogNote(product.description),
     image: product.featuredImage?.url ?? FALLBACK_IMAGE,
     imageAlt: product.featuredImage?.altText || product.title,

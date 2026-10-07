@@ -7,7 +7,13 @@ import { AddToCart } from "@/components/cart/add-to-cart";
 import { FacturaNote } from "@/components/factura-note";
 import { LowStockNote } from "@/components/low-stock-note";
 import { Reveal } from "@/components/reveal";
+import { JsonLd } from "@/components/json-ld";
 import { getCatalog, getCatalogProduct, relatedCatalog } from "@/lib/catalog";
+import {
+  breadcrumbJsonLd,
+  clipText,
+  productJsonLd,
+} from "@/lib/seo";
 
 export async function generateStaticParams() {
   const items = await getCatalog();
@@ -24,9 +30,33 @@ export async function generateMetadata({
     return { title: "Pieza no encontrada" };
   }
 
+  const description = clipText(
+    `${item.name}. ${item.note}`,
+    155,
+    item.name,
+  );
+
   return {
     title: item.name,
-    description: `${item.name} · ${item.sku}. ${item.details}`,
+    description,
+    openGraph: {
+      title: item.name,
+      description,
+      type: "website",
+      locale: "es_MX",
+      images: [
+        {
+          url: item.image,
+          alt: item.imageAlt,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: item.name,
+      description,
+      images: [item.image],
+    },
   };
 }
 
@@ -52,6 +82,8 @@ export default async function ProductPage({
 
   return (
     <div className="mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-16">
+      <JsonLd data={productJsonLd(item)} />
+      <JsonLd data={breadcrumbJsonLd(item)} />
       <p className="stamp motion-stamp text-[11px] text-steel">
         <Link href="/inventario" className="hover:text-rust">
           Inventario

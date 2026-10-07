@@ -8,7 +8,9 @@ import { WhatsappFab } from "@/components/whatsapp-fab";
 import { loadCart } from "@/lib/shopify/load-cart";
 import { isCustomerSignedIn } from "@/lib/shopify/customer-session";
 import { isCustomerAccountConfigured } from "@/lib/shopify/env";
+import { JsonLd } from "@/components/json-ld";
 import { site } from "@/lib/site";
+import { localBusinessJsonLd, siteDescription } from "@/lib/seo";
 import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
@@ -44,8 +46,19 @@ export const metadata: Metadata = {
     default: `${site.name} · ${site.tagline}`,
     template: `%s · ${site.name}`,
   },
-  description:
-    "Yonke El Cuñado en Garita de Otay, Tijuana: venta de partes para tractocamión. Catálogo y envíos a toda la República.",
+  description: siteDescription,
+  openGraph: {
+    type: "website",
+    locale: "es_MX",
+    siteName: site.name,
+    title: `${site.name} · ${site.tagline}`,
+    description: siteDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} · ${site.tagline}`,
+    description: siteDescription,
+  },
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
@@ -65,6 +78,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         className="grain flex min-h-full w-full flex-col bg-oil text-cream"
         suppressHydrationWarning
       >
+        <JsonLd data={localBusinessJsonLd()} />
         <CartProvider initialCart={cart}>
           <Header account={{ enabled: accountEnabled, signedIn }} />
           <main className="w-full flex-1">{children}</main>
