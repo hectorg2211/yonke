@@ -51,7 +51,9 @@ export function ProductCard({
         >
           {item.name}
         </h3>
-        {compact ? null : <p className="text-sm text-steel">{item.note}</p>}
+        {compact ? null : (
+          <p className="line-clamp-2 text-sm leading-6 text-steel">{item.note}</p>
+        )}
         <div
           className={`mt-auto flex items-end justify-between gap-3 ${compact ? "pt-2" : "pt-4"}`}
         >
