@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { LowStockNote } from "@/components/low-stock-note";
+import { quotePriceLabel, WhatsappQuoteButton } from "@/components/whatsapp-quote";
 import type { CatalogItem } from "@/lib/site";
-import { productPath } from "@/lib/site";
+import { hasListPrice, productPath } from "@/lib/site";
 
 export function ProductCard({
   item,
@@ -11,63 +12,72 @@ export function ProductCard({
   item: CatalogItem;
   compact?: boolean;
 }) {
+  const quote = !hasListPrice(item.priceAmount);
+  const soldOut = Boolean(item.variantId) && !item.availableForSale;
+
   return (
-    <Link
-      href={productPath(item.handle)}
-      className="group flex min-w-0 flex-col border border-line bg-panel hover:border-rust"
-    >
-      <div
-        className={`relative overflow-hidden ${compact ? "aspect-4/3" : "aspect-5/4"}`}
-      >
-        <Image
-          src={item.image}
-          alt={item.imageAlt}
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-oil/80 via-transparent to-transparent" />
-        <span className="stamp absolute top-3 left-3 border border-rust bg-rust px-2 py-1 text-[10px] text-paper">
-          {item.sku}
-        </span>
-        {item.variantId && !item.availableForSale ? (
-          <span className="stamp absolute inset-x-0 bottom-0 bg-amber px-3 py-2 text-center text-[11px] text-ink">
-            Agotada
-          </span>
-        ) : (
-          <LowStockNote
-            quantity={item.quantityAvailable}
-            available={item.availableForSale}
-            className="stamp absolute inset-x-0 bottom-0 bg-amber px-3 py-2 text-center text-[11px] text-ink"
-          />
-        )}
-      </div>
-      <div
-        className={`flex flex-1 flex-col ${compact ? "gap-2 p-4" : "gap-3 p-5"}`}
-      >
-        <p className="stamp text-[10px] text-steel">{item.category}</p>
-        <h3
-          className={`display text-cream ${compact ? "text-2xl" : "text-4xl"}`}
-        >
-          {item.name}
-        </h3>
-        {compact ? null : (
-          <p className="line-clamp-2 text-sm leading-6 text-steel">{item.note}</p>
-        )}
+    <article className="group flex min-w-0 flex-col border border-line bg-panel hover:border-rust">
+      <Link href={productPath(item.handle)} className="flex min-w-0 flex-1 flex-col">
         <div
-          className={`mt-auto flex items-end justify-between gap-3 ${compact ? "pt-2" : "pt-4"}`}
+          className={`relative overflow-hidden ${compact ? "aspect-4/3" : "aspect-5/4"}`}
         >
-          <div className="min-w-0">
-            <p className={item.variantId && !item.availableForSale ? "text-steel" : "text-amber"}>
-              {item.variantId && !item.availableForSale ? "Agotada" : item.price}
-            </p>
-          </div>
-          <span className="stamp text-[10px] text-cream underline decoration-rust underline-offset-4 group-hover:text-rust">
-            Ver pieza
+          <Image
+            src={item.image}
+            alt={item.imageAlt}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-oil/80 via-transparent to-transparent" />
+          <span className="stamp absolute top-3 left-3 border border-rust bg-rust px-2 py-1 text-[10px] text-paper">
+            {item.sku}
           </span>
+          {soldOut ? (
+            <span className="stamp absolute inset-x-0 bottom-0 bg-amber px-3 py-2 text-center text-[11px] text-ink">
+              Agotada
+            </span>
+          ) : (
+            <LowStockNote
+              quantity={item.quantityAvailable}
+              available={item.availableForSale}
+              className="stamp absolute inset-x-0 bottom-0 bg-amber px-3 py-2 text-center text-[11px] text-ink"
+            />
+          )}
         </div>
-      </div>
-    </Link>
+        <div
+          className={`flex flex-1 flex-col ${compact ? "gap-2 p-4" : "gap-3 p-5"} ${quote ? (compact ? "pb-3" : "pb-4") : ""}`}
+        >
+          <p className="stamp text-[10px] text-steel">{item.category}</p>
+          <h3 className={`display text-cream ${compact ? "text-2xl" : "text-4xl"}`}>
+            {item.name}
+          </h3>
+          {compact ? null : (
+            <p className="line-clamp-2 text-sm leading-6 text-steel">{item.note}</p>
+          )}
+          <div
+            className={`mt-auto flex items-end justify-between gap-3 ${compact ? "pt-2" : "pt-4"}`}
+          >
+            <div className="min-w-0">
+              <p className={soldOut && !quote ? "text-steel" : "text-amber"}>
+                {quote ? quotePriceLabel : soldOut ? "Agotada" : item.price}
+              </p>
+            </div>
+            <span className="stamp text-[10px] text-cream underline decoration-rust underline-offset-4 group-hover:text-rust">
+              Ver pieza
+            </span>
+          </div>
+        </div>
+      </Link>
+      {quote ? (
+        <div className={compact ? "px-4 pb-4" : "px-5 pb-5"}>
+          <WhatsappQuoteButton
+            name={item.name}
+            sku={item.sku}
+            handle={item.handle}
+            block
+          />
+        </div>
+      ) : null}
+    </article>
   );
 }
-

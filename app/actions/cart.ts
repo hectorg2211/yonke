@@ -11,7 +11,9 @@ import {
 import { clearCartId, readCartId, writeCartId } from "@/lib/shopify/cart-cookie";
 import { withCheckoutSession } from "@/lib/shopify/load-cart";
 import { getCustomerAccessToken } from "@/lib/shopify/customer-session";
+import { getVariantPriceAmount } from "@/lib/shopify/products";
 import type { CartActionResult, CartView } from "@/lib/shopify/cart-types";
+import { hasListPrice } from "@/lib/site";
 
 const VARIANT_PREFIX = "gid://shopify/ProductVariant/";
 
@@ -59,6 +61,18 @@ export async function addToCart(
   }
 
   const qty = clampQuantity(quantity);
+
+  let amount: number | null;
+  try {
+    amount = await getVariantPriceAmount(variantId);
+  } catch (error) {
+    console.error("Variant price:", error);
+    return { ok: false, error: "No se pudo verificar el precio de esta pieza." };
+  }
+
+  if (!hasListPrice(amount)) {
+    return { ok: false, error: "Esta pieza no tiene precio. Cotízala por WhatsApp." };
+  }
 
   try {
     const [cartId, customerAccessToken] = await Promise.all([

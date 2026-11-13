@@ -1,7 +1,7 @@
 import "server-only";
 
 import type { CatalogItem } from "@/lib/site";
-import { location, productPath, site, sites } from "@/lib/site";
+import { hasListPrice, location, productPath, site, sites } from "@/lib/site";
 import { siteUrl } from "@/lib/site-url";
 
 export const siteDescription =
@@ -161,7 +161,7 @@ export function productJsonLd(item: CatalogItem) {
     url,
   };
 
-  if (item.priceAmount != null && item.priceCurrency) {
+  if (hasListPrice(item.priceAmount) && item.priceCurrency) {
     data.offers = {
       "@type": "Offer",
       url,

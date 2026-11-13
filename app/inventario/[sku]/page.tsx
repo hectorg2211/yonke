@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { AddToCart } from "@/components/cart/add-to-cart";
+import { quotePriceLabel, WhatsappQuoteButton } from "@/components/whatsapp-quote";
 import { FacturaNote } from "@/components/factura-note";
 import { LowStockNote } from "@/components/low-stock-note";
 import { Reveal } from "@/components/reveal";
@@ -14,6 +15,7 @@ import {
   clipText,
   productJsonLd,
 } from "@/lib/seo";
+import { hasListPrice } from "@/lib/site";
 
 export async function generateStaticParams() {
   const items = await getCatalog();
@@ -71,6 +73,7 @@ export default async function ProductPage({
   }
 
   const related = await relatedCatalog(item);
+  const quote = !hasListPrice(item.priceAmount);
   const facts = [
     ["SKU", item.sku],
     ["Familia", item.category],
@@ -127,7 +130,7 @@ export default async function ProductPage({
             {item.name}
           </h1>
           <p className="motion-stamp motion-delay-2 mt-4 text-2xl text-amber">
-            {item.price}
+            {quote ? quotePriceLabel : item.price}
           </p>
           <LowStockNote
             quantity={item.quantityAvailable}
@@ -151,11 +154,19 @@ export default async function ProductPage({
           </dl>
 
           <div className="motion-stamp motion-delay-4 mt-8 flex flex-col gap-4">
-            <AddToCart
-              variantId={item.variantId}
-              availableForSale={item.availableForSale}
-              quantityAvailable={item.quantityAvailable}
-            />
+            {quote ? (
+              <WhatsappQuoteButton
+                name={item.name}
+                sku={item.sku}
+                handle={item.handle}
+              />
+            ) : (
+              <AddToCart
+                variantId={item.variantId}
+                availableForSale={item.availableForSale}
+                quantityAvailable={item.quantityAvailable}
+              />
+            )}
             <FacturaNote />
           </div>
         </div>

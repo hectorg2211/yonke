@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cache } from "react";
-import type { CatalogItem } from "@/lib/site";
+import { parsePriceAmount, type CatalogItem } from "@/lib/site";
 import { clipCatalogNote } from "@/lib/seo";
 import { formatMoney, type Money } from "@/lib/shopify/money";
 import { storefrontFetch } from "@/lib/shopify/storefront";
@@ -130,7 +130,9 @@ export function mapStorefrontProduct(product: StorefrontProductNode): CatalogIte
   const available = variant?.availableForSale ?? false;
   const sku = variant?.sku?.trim();
   const family = product.productType.trim() || "Pieza";
-  const amount = Number.parseFloat(product.priceRange.minVariantPrice.amount);
+  const money = product.priceRange?.minVariantPrice;
+  const rawAmount = money?.amount?.trim() ?? "";
+  const amount = parsePriceAmount(rawAmount);
   const quantity =
     typeof variant?.quantityAvailable === "number"
       ? variant.quantityAvailable
@@ -141,9 +143,9 @@ export function mapStorefrontProduct(product: StorefrontProductNode): CatalogIte
     sku: sku || product.handle,
     name: product.title,
     category: family,
-    price: formatMoney(product.priceRange.minVariantPrice),
-    priceAmount: Number.isFinite(amount) ? amount : null,
-    priceCurrency: product.priceRange.minVariantPrice.currencyCode,
+    price: money && rawAmount ? formatMoney(money) : "",
+    priceAmount: amount,
+    priceCurrency: money?.currencyCode?.trim() || null,
     note: clipCatalogNote(product.description),
     image: product.featuredImage?.url ?? FALLBACK_IMAGE,
     imageAlt: product.featuredImage?.altText || product.title,
@@ -204,3 +206,29 @@ export const getStorefrontProductByHandle = cache(
     return product ? mapStorefrontProduct(product) : null;
   },
 );
+
+const VARIANT_PRICE_QUERY = /* GraphQL */ `
+  query StorefrontVariantPrice($id: ID!) {
+    node(id: $id) {
+      ... on ProductVariant {
+        price {
+          amount
+          currencyCode
+        }
+      }
+    }
+  }
+`;
+
+type VariantPriceData = {
+  node: {
+    price?: Money | null;
+  } | null;
+};
+
+export async function getVariantPriceAmount(variantId: string): Promise<number | null> {
+  const result = await storefrontFetch<VariantPriceData>(VARIANT_PRICE_QUERY, {
+    id: variantId,
+  });
+  return parsePriceAmount(result.data?.node?.price?.amount);
+}

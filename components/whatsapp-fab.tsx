@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { site, whatsappUrl } from "@/lib/site";
 
-function WhatsappMark({ className }: { className?: string }) {
+export function WhatsappMark({ className }: { className?: string }) {
   return (
     <svg
       aria-hidden

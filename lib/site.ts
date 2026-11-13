@@ -254,6 +254,18 @@ export function productPath(handle: string) {
   return `/inventario/${handle}`;
 }
 
+export function parsePriceAmount(raw: string | null | undefined): number | null {
+  if (typeof raw !== "string") return null;
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+  const amount = Number(trimmed);
+  return Number.isFinite(amount) ? amount : null;
+}
+
+export function hasListPrice(amount: number | null | undefined): boolean {
+  return typeof amount === "number" && Number.isFinite(amount) && amount > 0;
+}
+
 export function getProductBySlug(slug: string) {
   const key = slug.toLowerCase();
   return catalog.find(

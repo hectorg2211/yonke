@@ -1,4 +1,4 @@
-import { categories, type CatalogItem } from "@/lib/site";
+import { categories, hasListPrice, type CatalogItem } from "@/lib/site";
 
 export const PAGE_SIZE = 12;
 
@@ -158,9 +158,13 @@ function relevanceScore(item: CatalogItem, q: string): number {
   return 10;
 }
 
+function listedPrice(item: CatalogItem): number | null {
+  return hasListPrice(item.priceAmount) ? item.priceAmount : null;
+}
+
 function comparePrice(a: CatalogItem, b: CatalogItem, direction: 1 | -1): number {
-  const av = a.priceAmount;
-  const bv = b.priceAmount;
+  const av = listedPrice(a);
+  const bv = listedPrice(b);
   if (av == null && bv == null) return 0;
   if (av == null) return 1;
   if (bv == null) return -1;
